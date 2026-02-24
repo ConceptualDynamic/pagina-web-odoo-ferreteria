@@ -1,0 +1,138 @@
+{
+  "integrations": {
+    "ga4": {
+      "enabled": true,
+      "measurement_id": "G-XXXXXXXXXX",
+      "implementation_method": "gtag.js",
+      "notes": "Reemplazar G-XXXXXXXXXX con el Measurement ID real de GA4",
+      "gtm_container_id": null,
+      "currency": "COP",
+      "enhanced_ecommerce": true,
+      "user_id_tracking": false,
+      "debug_mode": false
+    },
+    "crm": {
+      "enabled": true,
+      "platform": "odoo_native",
+      "lead_sources": {
+        "contact_form": {
+          "enabled": true,
+          "endpoint": "/contacto/submit",
+          "team_id": 1,
+          "priority": "0",
+          "type": "lead"
+        },
+        "quote_request": {
+          "enabled": true,
+          "endpoint": "/shop/quote/submit",
+          "team_id": 1,
+          "priority": "1",
+          "type": "opportunity"
+        },
+        "newsletter": {
+          "enabled": true,
+          "endpoint": "/newsletter/subscribe",
+          "team_id": 1,
+          "priority": "0",
+          "type": "lead"
+        }
+      },
+      "utm_tracking": true,
+      "auto_assignment": false,
+      "email_confirmation": true,
+      "email_templates": {
+        "contact_confirmation": "website_crm_lead_capture.email_template_contact_confirmation",
+        "quote_confirmation": "website_crm_lead_capture.email_template_quote_confirmation"
+      }
+    },
+    "whatsapp": {
+      "enabled": true,
+      "implementation_type": "float_button",
+      "phone_numbers": {
+        "sales": "573001234567",
+        "support": "573001234568",
+        "b2b": "573001234569"
+      },
+      "default_department": "sales",
+      "messages": {
+        "default": "Hola, tengo una consulta",
+        "product_page": "Hola, me interesa {product_name}",
+        "cart": "Hola, tengo productos en mi carrito y quisiera consultar",
+        "category": "Hola, busco productos en {category_name}",
+        "contact": "Hola, quisiera ponerme en contacto"
+      },
+      "business_hours": {
+        "monday_friday": "8:00-18:00",
+        "saturday": "9:00-14:00",
+        "sunday": "closed"
+      },
+      "show_offline_message": true,
+      "offline_message": "En este momento estamos fuera de horario. Te responderemos apenas podamos.",
+      "ga4_tracking": true,
+      "pulse_animation": true
+    },
+    "live_chat": {
+      "enabled": false,
+      "platform": "odoo_im_livechat",
+      "channel_id": null,
+      "welcome_message": "¡Hola! ¿En qué puedo ayudarte hoy?",
+      "default_username": "Asesor de Ferretería",
+      "business_hours": {
+        "enabled": true,
+        "timezone": "America/Bogota",
+        "schedule": {
+          "monday": "08:00-18:00",
+          "tuesday": "08:00-18:00",
+          "wednesday": "08:00-18:00",
+          "thursday": "08:00-18:00",
+          "friday": "08:00-18:00",
+          "saturday": "09:00-14:00",
+          "sunday": "closed"
+        }
+      },
+      "offline_message": "En este momento no hay asesores disponibles. Déjanos tu mensaje y te contactaremos pronto.",
+      "auto_create_lead": true,
+      "lead_threshold": 5,
+      "notes": "lead_threshold: número mínimo de mensajes para considerar crear un lead automáticamente"
+    }
+  },
+  "attribution": {
+    "model": "last_touch",
+    "track_first_touch": true,
+    "cookie_duration_days": 30,
+    "notes": "Model puede ser: last_touch, first_touch, linear, time_decay"
+  },
+  "privacy": {
+    "cookie_consent_required": true,
+    "cookie_banner_enabled": true,
+    "gdpr_compliant": true,
+    "opt_out_available": true
+  },
+  "monitoring": {
+    "ga4_alerts": {
+      "no_purchases_24h": true,
+      "traffic_drop_threshold": 0.5,
+      "error_rate_threshold": 0.05
+    },
+    "crm_alerts": {
+      "no_leads_24h": true,
+      "duplicate_detection": true
+    },
+    "performance_alerts": {
+      "page_load_time_threshold": 3000,
+      "api_response_time_threshold": 1000
+    }
+  },
+  "testing": {
+    "ga4_debug_mode": false,
+    "test_transaction_ids": [],
+    "exclude_internal_traffic": true,
+    "internal_ips": ["192.168.1.0/24"]
+  },
+  "documentation": {
+    "readme": "README.md",
+    "integration_guide": "docs/08-integraciones.md",
+    "validation_checklist": "docs/checklist-integraciones.md",
+    "code_examples": "examples/integrations/"
+  }
+}
