@@ -7,9 +7,17 @@
 # Uso: ./validate-pre-launch.sh <URL_SITIO>
 #
 # Ejemplo: ./validate-pre-launch.sh https://miferreteria.com
+#
+# Requisitos:
+#   - curl
+#   - openssl
+#   - bc
+#   - grep (con soporte para expresiones regulares extendidas)
+#   - sed
 ###############################################################################
 
-set -e
+# Note: No usamos 'set -e' porque esperamos que algunos comandos fallen
+# y queremos capturar y reportar esas fallas, no terminar el script
 
 # Colores para output
 RED='\033[0;31m'
@@ -87,8 +95,11 @@ fi
 if [[ $SITE_URL == https://* ]]; then
     print_pass "URL usa HTTPS"
     
+    # Extraer hostname (sin protocolo, path, o puerto)
+    HOSTNAME=$(echo "$SITE_URL" | sed -e 's|^https://||' -e 's|/.*||' -e 's|:.*||')
+    
     # Verificar certificado SSL
-    if echo | openssl s_client -servername "${SITE_URL#https://}" -connect "${SITE_URL#https://}:443" 2>/dev/null | grep -q "Verify return code: 0"; then
+    if echo | openssl s_client -servername "$HOSTNAME" -connect "${HOSTNAME}:443" 2>/dev/null | grep -q "Verify return code: 0"; then
         print_pass "Certificado SSL válido"
     else
         print_fail "Certificado SSL inválido o con problemas"
@@ -212,10 +223,10 @@ print_header "5. SEO BÁSICO"
 # Descargar home page
 HOME_HTML=$(curl -s "$SITE_URL")
 
-# Verificar título
-if echo "$HOME_HTML" | grep -q "<title>"; then
-    TITLE=$(echo "$HOME_HTML" | grep -oP '(?<=<title>).*?(?=</title>)' | head -1)
-    if [ -n "$TITLE" ] && [ "$TITLE" != "Home" ] && [ "$TITLE" != "Odoo" ]; then
+# Verificar título (usando sed para mayor compatibilidad)
+TITLE=$(echo "$HOME_HTML" | sed -n 's/.*<title>\(.*\)<\/title>.*/\1/p' | head -1)
+if [ -n "$TITLE" ]; then
+    if [ "$TITLE" != "Home" ] && [ "$TITLE" != "Odoo" ]; then
         print_pass "Título personalizado presente: '$TITLE'"
     else
         print_warn "Título genérico o por defecto"

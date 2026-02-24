@@ -13,6 +13,9 @@ Script de validación automática para ejecutar antes del go-live. Realiza check
 - `openssl` - Para validar certificados SSL
 - `bc` - Para cálculos matemáticos
 - `grep` - Para búsqueda de patrones
+- `sed` - Para procesamiento de texto
+
+**Nota**: Estos comandos están disponibles por defecto en la mayoría de sistemas Linux/Unix. En macOS, todos los comandos requeridos están preinstalados.
 
 #### Uso
 
