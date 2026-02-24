@@ -1,0 +1,11 @@
+# Roadmap por fases
+- Fase 0: Descubrimiento y alcance
+- Fase 1: Setup técnico Odoo
+- Fase 2: Arquitectura y navegación
+- Fase 3: Catálogo y carga
+- Fase 4: Diseño páginas clave
+- Fase 5: Checkout/pagos/envíos
+- Fase 6: SEO base
+- Fase 7: Integraciones
+- Fase 8: QA
+- Fase 9: Go-live + monitoreo 72h
