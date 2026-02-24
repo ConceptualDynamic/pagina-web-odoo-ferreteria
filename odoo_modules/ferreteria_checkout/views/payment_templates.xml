@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Store payment template -->
+    <template id="payment_form_store" name="Store Payment Form">
+        <t t-call="payment.payment_form">
+            <t t-set="provider" t-value="provider"/>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pago en tienda</h5>
+                    <div t-if="provider.store_instructions" t-raw="provider.store_instructions"/>
+                    <div class="alert alert-info mt-3">
+                        <strong>Importante:</strong> Al confirmar este pedido, se generará un código 
+                        que deberás presentar en nuestra tienda para completar el pago.
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+</odoo>

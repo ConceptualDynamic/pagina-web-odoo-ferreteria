@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="email_template_order_confirmation" model="mail.template">
+        <field name="name">Ferretería: Confirmación de pedido</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Pedido #${object.name} confirmado - Ferretería</field>
+        <field name="email_from">${object.company_id.email or 'noreply@ferreteria.com'}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="body_html" type="html">
+<![CDATA[
+<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
+    <!-- Header -->
+    <div style="background: #2c3e50; color: white; padding: 30px; text-align: center;">
+        <h1 style="margin: 0; font-size: 28px;">¡Gracias por tu compra!</h1>
+        <p style="margin: 10px 0 0 0; font-size: 14px;">Tu pedido ha sido confirmado</p>
+    </div>
+    
+    <!-- Order Info -->
+    <div style="padding: 30px; background: #f8f9fa;">
+        <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <h2 style="color: #2c3e50; margin-top: 0;">Pedido #${object.name}</h2>
+            <p style="color: #7f8c8d; margin: 5px 0;">
+                <strong>Fecha:</strong> ${format_date(object.date_order)}<br/>
+                <strong>Cliente:</strong> ${object.partner_id.name}
+            </p>
+        </div>
+        
+        <!-- Products -->
+        <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="color: #2c3e50; margin-top: 0;">Productos</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #ecf0f1;">
+                        <th style="text-align: left; padding: 10px; color: #7f8c8d;">Producto</th>
+                        <th style="text-align: center; padding: 10px; color: #7f8c8d;">Cant.</th>
+                        <th style="text-align: right; padding: 10px; color: #7f8c8d;">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    % for line in object.order_line:
+                    <tr style="border-bottom: 1px solid #ecf0f1;">
+                        <td style="padding: 10px;">${line.product_id.name}</td>
+                        <td style="text-align: center; padding: 10px;">${line.product_uom_qty}</td>
+                        <td style="text-align: right; padding: 10px;">
+                            ${format_amount(line.price_subtotal, object.currency_id)}
+                        </td>
+                    </tr>
+                    % endfor
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" style="text-align: right; padding: 10px; font-weight: bold;">Subtotal:</td>
+                        <td style="text-align: right; padding: 10px;">
+                            ${format_amount(object.amount_untaxed, object.currency_id)}
+                        </td>
+                    </tr>
+                    % if object.discount_amount > 0:
+                    <tr>
+                        <td colspan="2" style="text-align: right; padding: 10px; color: #27ae60;">Descuento:</td>
+                        <td style="text-align: right; padding: 10px; color: #27ae60;">
+                            -${format_amount(object.discount_amount, object.currency_id)}
+                        </td>
+                    </tr>
+                    % endif
+                    <tr>
+                        <td colspan="2" style="text-align: right; padding: 10px;">Impuestos:</td>
+                        <td style="text-align: right; padding: 10px;">
+                            ${format_amount(object.amount_tax, object.currency_id)}
+                        </td>
+                    </tr>
+                    % if object.carrier_id:
+                    <tr>
+                        <td colspan="2" style="text-align: right; padding: 10px;">Envío:</td>
+                        <td style="text-align: right; padding: 10px;">
+                            ${format_amount(object.amount_delivery, object.currency_id) if hasattr(object, 'amount_delivery') else 'Incluido'}
+                        </td>
+                    </tr>
+                    % endif
+                    <tr style="border-top: 2px solid #2c3e50;">
+                        <td colspan="2" style="text-align: right; padding: 15px; font-size: 18px; font-weight: bold;">
+                            TOTAL:
+                        </td>
+                        <td style="text-align: right; padding: 15px; font-size: 18px; font-weight: bold; color: #27ae60;">
+                            ${format_amount(object.amount_total, object.currency_id)}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <!-- Shipping/Pickup Info -->
+        % if object.carrier_id:
+        <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 20px;">
+            % if 'retiro' in object.carrier_id.name.lower() or 'pickup' in object.carrier_id.name.lower():
+            <h3 style="margin-top: 0; color: #856404;">📦 Retiro en tienda</h3>
+            <p style="color: #856404; margin: 5px 0;">
+                Tu pedido estará listo para recoger en aproximadamente 
+                <strong>${object.carrier_id.preparation_time if hasattr(object.carrier_id, 'preparation_time') else 2} horas</strong>.
+            </p>
+            <p style="color: #856404; margin: 10px 0 5px 0;"><strong>Dirección:</strong></p>
+            <p style="color: #856404; margin: 5px 0;">
+                ${object.company_id.street}<br/>
+                ${object.company_id.city}, ${object.company_id.state_id.name if object.company_id.state_id else ''}<br/>
+                Teléfono: ${object.company_id.phone}
+            </p>
+            <p style="color: #856404; margin: 10px 0 5px 0;"><strong>Horario:</strong></p>
+            <p style="color: #856404; margin: 5px 0;">
+                Lunes a Viernes: 8:00 AM - 6:00 PM<br/>
+                Sábados: 8:00 AM - 2:00 PM
+            </p>
+            % else:
+            <h3 style="margin-top: 0; color: #856404;">🚚 Envío a domicilio</h3>
+            <p style="color: #856404; margin: 5px 0;">
+                Tu pedido será enviado a:<br/>
+                <strong>${object.partner_shipping_id.street}</strong><br/>
+                ${object.partner_shipping_id.city}, ${object.partner_shipping_id.state_id.name if object.partner_shipping_id.state_id else ''}
+            </p>
+            <p style="color: #856404; margin: 10px 0 5px 0;">
+                Tiempo estimado de entrega: <strong>3-5 días hábiles</strong>
+            </p>
+            % endif
+        </div>
+        % endif
+        
+        <!-- Payment Info -->
+        % if object.payment_provider_id:
+        <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="color: #2c3e50; margin-top: 0;">💳 Método de pago</h3>
+            <p style="color: #7f8c8d; margin: 5px 0;">
+                ${object.payment_provider_id.name if hasattr(object, 'payment_provider_id') else 'Método de pago seleccionado'}
+            </p>
+        </div>
+        % endif
+        
+        <!-- Actions -->
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="/my/orders/${object.id}" 
+               style="display: inline-block; background: #3498db; color: white; padding: 15px 40px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">
+                Ver estado del pedido
+            </a>
+        </div>
+        
+        <!-- Support -->
+        <div style="background: #ecf0f1; padding: 20px; border-radius: 8px; text-align: center;">
+            <p style="color: #7f8c8d; margin: 5px 0; font-size: 14px;">
+                ¿Tienes alguna pregunta? Contáctanos:<br/>
+                <strong>Email:</strong> ${object.company_id.email}<br/>
+                <strong>Teléfono:</strong> ${object.company_id.phone}
+            </p>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div style="background: #2c3e50; color: white; padding: 20px; text-align: center; font-size: 12px;">
+        <p style="margin: 5px 0;">© ${object.company_id.name} - Todos los derechos reservados</p>
+        <p style="margin: 5px 0; color: #95a5a6;">
+            Este es un email automático, por favor no respondas a este mensaje.
+        </p>
+    </div>
+</div>
+]]>
+        </field>
+    </record>
+    
+</odoo>
