@@ -1,0 +1,413 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Plantilla Maestra de Producto - Ferretería",
+  "description": "Esquema maestro para datos de productos de ferretería en Odoo",
+  "type": "object",
+  "required": [
+    "sku",
+    "name",
+    "category",
+    "price",
+    "stock",
+    "status"
+  ],
+  "properties": {
+    "sku": {
+      "type": "string",
+      "description": "Código único de producto (Stock Keeping Unit)",
+      "pattern": "^[A-Z]{3}-[0-9]{4}-[A-Z0-9]{3}$",
+      "example": "FER-0001-ABC"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nombre completo del producto",
+      "minLength": 3,
+      "maxLength": 200,
+      "example": "Martillo de Carpintero 16oz"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly version del nombre del producto",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "example": "martillo-carpintero-16oz"
+    },
+    "category": {
+      "type": "object",
+      "description": "Categorización del producto",
+      "required": ["main", "subcategory"],
+      "properties": {
+        "main": {
+          "type": "string",
+          "description": "Categoría principal",
+          "enum": [
+            "Herramientas Manuales",
+            "Herramientas Eléctricas",
+            "Materiales de Construcción",
+            "Plomería",
+            "Electricidad",
+            "Pintura",
+            "Ferretería General",
+            "Seguridad Industrial",
+            "Jardinería",
+            "Adhesivos y Químicos"
+          ]
+        },
+        "subcategory": {
+          "type": "string",
+          "description": "Subcategoría específica",
+          "example": "Martillos y Mazos"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Etiquetas adicionales para búsqueda",
+          "items": {
+            "type": "string"
+          },
+          "example": ["carpintería", "construcción", "profesional"]
+        }
+      }
+    },
+    "brand": {
+      "type": "string",
+      "description": "Marca del producto",
+      "example": "Stanley"
+    },
+    "model": {
+      "type": "string",
+      "description": "Modelo o referencia del fabricante",
+      "example": "STHT51280"
+    },
+    "price": {
+      "type": "object",
+      "description": "Información de precios",
+      "required": ["base", "currency"],
+      "properties": {
+        "base": {
+          "type": "number",
+          "description": "Precio base sin impuestos",
+          "minimum": 0,
+          "example": 25000
+        },
+        "currency": {
+          "type": "string",
+          "description": "Código de moneda ISO 4217",
+          "enum": ["COP", "USD"],
+          "default": "COP"
+        },
+        "tax_rate": {
+          "type": "number",
+          "description": "Tasa de impuesto (IVA) en porcentaje",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 19,
+          "example": 19
+        },
+        "sale_price": {
+          "type": "number",
+          "description": "Precio de oferta (opcional)",
+          "minimum": 0,
+          "example": 22000
+        },
+        "discount_percentage": {
+          "type": "number",
+          "description": "Porcentaje de descuento",
+          "minimum": 0,
+          "maximum": 100,
+          "example": 12
+        },
+        "valid_from": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Fecha de inicio de precio/oferta"
+        },
+        "valid_until": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Fecha de fin de precio/oferta"
+        }
+      }
+    },
+    "stock": {
+      "type": "object",
+      "description": "Información de inventario",
+      "required": ["quantity", "unit"],
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "description": "Cantidad disponible en inventario",
+          "minimum": 0,
+          "example": 150
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unidad de medida",
+          "enum": ["unidad", "par", "kg", "m", "m2", "m3", "litro", "galón", "caja", "paquete"],
+          "default": "unidad"
+        },
+        "warehouse": {
+          "type": "string",
+          "description": "Ubicación de bodega",
+          "example": "BOG-PRINCIPAL"
+        },
+        "reserved": {
+          "type": "integer",
+          "description": "Cantidad reservada en pedidos",
+          "minimum": 0,
+          "default": 0
+        },
+        "available": {
+          "type": "integer",
+          "description": "Cantidad disponible para venta (quantity - reserved)",
+          "minimum": 0
+        },
+        "min_stock": {
+          "type": "integer",
+          "description": "Stock mínimo antes de reorden",
+          "minimum": 0,
+          "example": 20
+        },
+        "max_stock": {
+          "type": "integer",
+          "description": "Stock máximo recomendado",
+          "minimum": 0,
+          "example": 500
+        },
+        "lead_time_days": {
+          "type": "integer",
+          "description": "Días de tiempo de entrega del proveedor",
+          "minimum": 0,
+          "example": 7
+        }
+      }
+    },
+    "images": {
+      "type": "object",
+      "description": "Imágenes del producto",
+      "required": ["main"],
+      "properties": {
+        "main": {
+          "type": "string",
+          "description": "URL de imagen principal",
+          "format": "uri",
+          "example": "https://cdn.example.com/products/martillo-16oz-main.jpg"
+        },
+        "gallery": {
+          "type": "array",
+          "description": "Galería de imágenes adicionales",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "maxItems": 10,
+          "example": [
+            "https://cdn.example.com/products/martillo-16oz-detail1.jpg",
+            "https://cdn.example.com/products/martillo-16oz-detail2.jpg"
+          ]
+        },
+        "thumbnail": {
+          "type": "string",
+          "description": "URL de miniatura para listados",
+          "format": "uri",
+          "example": "https://cdn.example.com/products/martillo-16oz-thumb.jpg"
+        },
+        "alt_text": {
+          "type": "string",
+          "description": "Texto alternativo para accesibilidad y SEO",
+          "example": "Martillo de carpintero Stanley 16oz con mango de fibra de vidrio"
+        }
+      }
+    },
+    "description": {
+      "type": "object",
+      "description": "Descripciones del producto",
+      "properties": {
+        "short": {
+          "type": "string",
+          "description": "Descripción corta para listados",
+          "maxLength": 250,
+          "example": "Martillo de carpintero profesional de 16oz con mango ergonómico de fibra de vidrio y cabeza forjada en acero."
+        },
+        "long": {
+          "type": "string",
+          "description": "Descripción detallada del producto",
+          "maxLength": 5000,
+          "example": "El martillo de carpintero Stanley de 16oz es la herramienta ideal para trabajos de carpintería profesional y doméstica. Cuenta con una cabeza forjada en acero de alta resistencia y un mango ergonómico de fibra de vidrio que absorbe impactos y reduce la fatiga. Incluye uña extraíble para mayor versatilidad."
+        },
+        "technical": {
+          "type": "string",
+          "description": "Especificaciones técnicas",
+          "example": "Peso cabeza: 16oz (454g)\nLongitud total: 33cm\nMaterial mango: Fibra de vidrio\nMaterial cabeza: Acero forjado\nTipo: Carpintero"
+        }
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Atributos y especificaciones del producto",
+      "properties": {
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "length": {
+              "type": "number",
+              "description": "Largo en cm"
+            },
+            "width": {
+              "type": "number",
+              "description": "Ancho en cm"
+            },
+            "height": {
+              "type": "number",
+              "description": "Alto en cm"
+            },
+            "weight": {
+              "type": "number",
+              "description": "Peso en kg"
+            }
+          }
+        },
+        "material": {
+          "type": "string",
+          "description": "Material principal",
+          "example": "Acero forjado"
+        },
+        "color": {
+          "type": "string",
+          "description": "Color del producto",
+          "example": "Negro/Amarillo"
+        },
+        "warranty_months": {
+          "type": "integer",
+          "description": "Meses de garantía",
+          "minimum": 0,
+          "example": 12
+        },
+        "country_of_origin": {
+          "type": "string",
+          "description": "País de origen",
+          "example": "USA"
+        },
+        "certifications": {
+          "type": "array",
+          "description": "Certificaciones y normas",
+          "items": {
+            "type": "string"
+          },
+          "example": ["ANSI", "ISO 9001"]
+        },
+        "custom": {
+          "type": "object",
+          "description": "Atributos personalizados específicos de categoría",
+          "additionalProperties": true
+        }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "description": "Metadatos para optimización en motores de búsqueda",
+      "properties": {
+        "meta_title": {
+          "type": "string",
+          "maxLength": 60,
+          "example": "Martillo Carpintero Stanley 16oz | Ferretería Online"
+        },
+        "meta_description": {
+          "type": "string",
+          "maxLength": 160,
+          "example": "Compra el martillo de carpintero Stanley 16oz. Mango de fibra de vidrio, cabeza forjada. Envío gratis. Garantía 12 meses."
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": ["martillo", "carpintero", "stanley", "herramientas", "16oz"]
+        }
+      }
+    },
+    "related_products": {
+      "type": "array",
+      "description": "SKUs de productos relacionados",
+      "items": {
+        "type": "string"
+      },
+      "example": ["FER-0002-XYZ", "FER-0003-DEF"]
+    },
+    "supplier": {
+      "type": "object",
+      "description": "Información del proveedor",
+      "properties": {
+        "supplier_id": {
+          "type": "string",
+          "description": "ID del proveedor"
+        },
+        "supplier_name": {
+          "type": "string",
+          "description": "Nombre del proveedor"
+        },
+        "supplier_sku": {
+          "type": "string",
+          "description": "SKU del proveedor"
+        },
+        "cost_price": {
+          "type": "number",
+          "description": "Precio de costo",
+          "minimum": 0
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Estado del producto",
+      "enum": ["active", "inactive", "discontinued", "coming_soon", "out_of_stock"],
+      "default": "active"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "description": "Producto destacado",
+      "default": false
+    },
+    "is_new": {
+      "type": "boolean",
+      "description": "Producto nuevo",
+      "default": false
+    },
+    "is_bestseller": {
+      "type": "boolean",
+      "description": "Producto más vendido",
+      "default": false
+    },
+    "requires_assembly": {
+      "type": "boolean",
+      "description": "Requiere ensamblaje",
+      "default": false
+    },
+    "requires_installation": {
+      "type": "boolean",
+      "description": "Requiere instalación profesional",
+      "default": false
+    },
+    "hazardous_material": {
+      "type": "boolean",
+      "description": "Material peligroso (requiere manejo especial)",
+      "default": false
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Fecha de creación del registro"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Fecha de última actualización"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Usuario que creó el registro"
+    },
+    "updated_by": {
+      "type": "string",
+      "description": "Usuario que actualizó el registro"
+    }
+  }
+}
