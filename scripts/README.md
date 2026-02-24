@@ -135,7 +135,9 @@ Si necesitas agregar más scripts de validación o automatización:
 4. Seguir las convenciones:
    - Usar bash como shell
    - Incluir encabezado con descripción y uso
-   - Implementar manejo de errores (`set -e`)
+   - Implementar manejo de errores apropiado:
+     - Usar `set -e` si el script debe detenerse ante cualquier error
+     - NO usar `set -e` si el script necesita manejar errores gracefully (como validate-pre-launch.sh)
    - Proporcionar mensajes claros de salida
    - Usar códigos de salida apropiados
 
