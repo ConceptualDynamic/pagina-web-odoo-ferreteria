@@ -38,9 +38,14 @@ jobs:
             exit 0
           fi
 
-          TOKEN=$(curl -s -X POST "https://login.microsoftonline.com/${MS_TENANT_ID}/oauth2/v2.0/token" \
+          TOKEN=$(curl -sS -X POST "https://login.microsoftonline.com/${MS_TENANT_ID}/oauth2/v2.0/token" \
             -H "Content-Type: application/x-www-form-urlencoded" \
             -d "client_id=${MS_CLIENT_ID}&client_secret=${MS_CLIENT_SECRET}&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default&grant_type=client_credentials" | jq -r .access_token)
+
+          if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then
+            echo "Failed to obtain access token";
+            exit 1
+          fi
 
           if [ "$ISSUE_STATE_CLOSED" = "true" ]; then
             PERCENT=100
@@ -48,10 +53,16 @@ jobs:
             PERCENT=0
           fi
 
-          curl -s -X PATCH "https://graph.microsoft.com/v1.0/planner/tasks/${PLANNER_TASK_ID}" \
+          HTTP_CODE=$(curl -sS -o /tmp/planner_patch_resp.json -w "%{http_code}" -X PATCH "https://graph.microsoft.com/v1.0/planner/tasks/${PLANNER_TASK_ID}" \
             -H "Authorization: Bearer ${TOKEN}" \
             -H "Content-Type: application/json" \
             -H "If-Match: *" \
-            -d "{\"percentComplete\": ${PERCENT}}" >/dev/null
+            -d "{\"percentComplete\": ${PERCENT}}")
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "Planner PATCH failed with HTTP ${HTTP_CODE}";
+            cat /tmp/planner_patch_resp.json || true
+            exit 1
+          fi
 
           echo "Planner task ${PLANNER_TASK_ID} updated to ${PERCENT}%"
