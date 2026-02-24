@@ -1,0 +1,26 @@
+name: Fase Task
+about: Tarea de fase vinculada a Planner
+labels: [odoo-ferreteria]
+body:
+  - type: input
+    id: planner_task_id
+    attributes:
+      label: Planner Task ID
+      description: ID de la tarea en Planner
+      placeholder: Ej. N9nIfdQOHUGjdLnp-R3rcmUAGYN1
+    validations:
+      required: true
+  - type: input
+    id: planner_plan_id
+    attributes:
+      label: Planner Plan ID
+      description: ID del plan en Planner
+      placeholder: NMXfUWHCj0SvaGmzbSwJvWUACisW
+    validations:
+      required: true
+  - type: textarea
+    id: alcance
+    attributes:
+      label: Alcance / criterio de aceptación
+    validations:
+      required: true

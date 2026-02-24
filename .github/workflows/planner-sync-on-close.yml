@@ -1,0 +1,57 @@
+name: Planner Sync On Close
+
+on:
+  issues:
+    types: [closed, reopened]
+
+jobs:
+  planner-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract Planner Task ID from issue body
+        id: extract
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const m = body.match(/Planner Task ID:\s*`?([A-Za-z0-9_-]+)`?/i);
+            const taskId = m ? m[1] : '';
+            core.setOutput('taskId', taskId);
+            core.setOutput('isClosed', context.payload.action === 'closed' ? 'true' : 'false');
+
+      - name: Skip if no Planner Task ID
+        if: steps.extract.outputs.taskId == ''
+        run: echo "No Planner Task ID found. Skipping."
+
+      - name: Update Planner status via Graph
+        if: steps.extract.outputs.taskId != ''
+        env:
+          PLANNER_TASK_ID: ${{ steps.extract.outputs.taskId }}
+          ISSUE_STATE_CLOSED: ${{ steps.extract.outputs.isClosed }}
+          MS_TENANT_ID: ${{ secrets.MS_TENANT_ID }}
+          MS_CLIENT_ID: ${{ secrets.MS_CLIENT_ID }}
+          MS_CLIENT_SECRET: ${{ secrets.MS_CLIENT_SECRET }}
+        run: |
+          set -e
+          if [ -z "$MS_TENANT_ID" ] || [ -z "$MS_CLIENT_ID" ] || [ -z "$MS_CLIENT_SECRET" ]; then
+            echo "Missing Microsoft secrets. Configure MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET.";
+            exit 0
+          fi
+
+          TOKEN=$(curl -s -X POST "https://login.microsoftonline.com/${MS_TENANT_ID}/oauth2/v2.0/token" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "client_id=${MS_CLIENT_ID}&client_secret=${MS_CLIENT_SECRET}&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default&grant_type=client_credentials" | jq -r .access_token)
+
+          if [ "$ISSUE_STATE_CLOSED" = "true" ]; then
+            PERCENT=100
+          else
+            PERCENT=0
+          fi
+
+          curl -s -X PATCH "https://graph.microsoft.com/v1.0/planner/tasks/${PLANNER_TASK_ID}" \
+            -H "Authorization: Bearer ${TOKEN}" \
+            -H "Content-Type: application/json" \
+            -H "If-Match: *" \
+            -d "{\"percentComplete\": ${PERCENT}}" >/dev/null
+
+          echo "Planner task ${PLANNER_TASK_ID} updated to ${PERCENT}%"
