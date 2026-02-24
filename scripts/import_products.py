@@ -105,7 +105,7 @@ class ProductImporter:
         self.duplicates = defaultdict(list)
     
     def normalize_product(self, product: Dict) -> Dict:
-        """Normalize product data"""
+        """Normalize product data (assumes validation has already passed)"""
         normalized = {}
         
         # Normalize SKU (uppercase, trim)
@@ -121,17 +121,11 @@ class ProductImporter:
         # Normalize brand
         normalized['brand'] = product.get('brand', '').strip()
         
-        # Format price (ensure numeric)
-        try:
-            normalized['price'] = float(product.get('price', 0))
-        except (ValueError, TypeError):
-            normalized['price'] = 0
+        # Format price (validation ensures this is valid)
+        normalized['price'] = float(product.get('price', 0))
         
-        # Format stock (ensure integer)
-        try:
-            normalized['stock'] = int(product.get('stock', 0))
-        except (ValueError, TypeError):
-            normalized['stock'] = 0
+        # Format stock (validation ensures this is valid)
+        normalized['stock'] = int(product.get('stock', 0))
         
         # Normalize unit
         normalized['unit'] = product.get('unit', 'unidad').strip().lower()
@@ -148,14 +142,14 @@ class ProductImporter:
         
         return normalized
     
-    def detect_duplicates(self, products: List[Dict]) -> Dict[str, List[int]]:
-        """Detect duplicate products by SKU"""
+    def detect_duplicates(self, products_with_lines: List[Tuple[Dict, int]]) -> Dict[str, List[int]]:
+        """Detect duplicate products by SKU with accurate line numbers"""
         sku_map = defaultdict(list)
         
-        for idx, product in enumerate(products):
+        for product, line_num in products_with_lines:
             sku = product.get('sku', '')
             if sku:
-                sku_map[sku].append(idx + 1)  # 1-indexed for user display
+                sku_map[sku].append(line_num)
         
         # Filter only duplicates
         duplicates = {sku: lines for sku, lines in sku_map.items() if len(lines) > 1}
@@ -164,6 +158,7 @@ class ProductImporter:
     def import_from_csv(self, file_path: str) -> Tuple[List[Dict], bool]:
         """Import products from CSV file"""
         products = []
+        products_with_lines = []  # Track products with their line numbers
         line_num = 1  # Start at 1 for header
         
         try:
@@ -180,6 +175,7 @@ class ProductImporter:
                     # Normalize and add to list
                     normalized = self.normalize_product(row)
                     products.append(normalized)
+                    products_with_lines.append((normalized, line_num))
         
         except FileNotFoundError:
             print(f"❌ Error: File '{file_path}' not found")
@@ -188,8 +184,8 @@ class ProductImporter:
             print(f"❌ Error reading file: {str(e)}")
             return [], False
         
-        # Detect duplicates
-        duplicates = self.detect_duplicates(products)
+        # Detect duplicates using line numbers
+        duplicates = self.detect_duplicates(products_with_lines)
         
         if duplicates:
             print(f"\n❌ DUPLICATE SKUs DETECTED:")
