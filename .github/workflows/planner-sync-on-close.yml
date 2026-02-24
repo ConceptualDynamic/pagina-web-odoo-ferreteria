@@ -53,10 +53,21 @@ jobs:
             PERCENT=0
           fi
 
+          TASK_ETAG=$(curl -sS -D /tmp/task_headers.txt -o /tmp/task_get_resp.json \
+            -H "Authorization: Bearer ${TOKEN}" \
+            "https://graph.microsoft.com/v1.0/planner/tasks/${PLANNER_TASK_ID}" >/dev/null 2>&1; \
+            awk 'BEGIN{IGNORECASE=1} /^ETag:/{sub(/\r/,"",$2); print $2}' /tmp/task_headers.txt)
+
+          if [ -z "$TASK_ETAG" ]; then
+            echo "Failed to read task ETag";
+            cat /tmp/task_get_resp.json || true
+            exit 1
+          fi
+
           HTTP_CODE=$(curl -sS -o /tmp/planner_patch_resp.json -w "%{http_code}" -X PATCH "https://graph.microsoft.com/v1.0/planner/tasks/${PLANNER_TASK_ID}" \
             -H "Authorization: Bearer ${TOKEN}" \
             -H "Content-Type: application/json" \
-            -H "If-Match: *" \
+            -H "If-Match: ${TASK_ETAG}" \
             -d "{\"percentComplete\": ${PERCENT}}")
 
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
