@@ -22,6 +22,11 @@ Implementar un sitio transaccional y escalable en Odoo, con catálogo, checkout,
 - `docs/10-go-live-y-monitoreo.md`
 - `docs/11-matriz-github-planner.md`
 
+### Templates de monitoreo
+- `docs/templates/post-launch-monitoring-report.md` - Template del reporte de estabilización 72h
+- `docs/templates/monitoring-technical-guide.md` - Guía técnica de monitoreo
+- `docs/templates/daily-monitoring-checklist.md` - Checklist diario de verificación
+
 ## Convención de seguimiento (Opción 3)
 GitHub Project = hub de producto/roadmap técnico.
 Planner = ejecución operativa diaria.
