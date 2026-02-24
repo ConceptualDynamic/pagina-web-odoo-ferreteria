@@ -1,0 +1,88 @@
+{
+  "sku": "FER-0001-MRT",
+  "name": "Martillo de Carpintero Stanley 16oz",
+  "slug": "martillo-carpintero-stanley-16oz",
+  "category": {
+    "main": "Herramientas Manuales",
+    "subcategory": "Martillos y Mazos",
+    "tags": ["carpintería", "construcción", "profesional", "stanley"]
+  },
+  "brand": "Stanley",
+  "model": "STHT51280",
+  "price": {
+    "base": 25000,
+    "currency": "COP",
+    "tax_rate": 19,
+    "sale_price": 22000,
+    "discount_percentage": 12,
+    "valid_from": "2026-01-01T00:00:00Z",
+    "valid_until": "2026-03-31T23:59:59Z"
+  },
+  "stock": {
+    "quantity": 150,
+    "unit": "unidad",
+    "warehouse": "BOG-PRINCIPAL",
+    "reserved": 10,
+    "available": 140,
+    "min_stock": 20,
+    "max_stock": 500,
+    "lead_time_days": 7
+  },
+  "images": {
+    "main": "https://cdn.ferreteria.example.com/products/martillo-stanley-16oz-main.jpg",
+    "gallery": [
+      "https://cdn.ferreteria.example.com/products/martillo-stanley-16oz-detail1.jpg",
+      "https://cdn.ferreteria.example.com/products/martillo-stanley-16oz-detail2.jpg",
+      "https://cdn.ferreteria.example.com/products/martillo-stanley-16oz-detail3.jpg"
+    ],
+    "thumbnail": "https://cdn.ferreteria.example.com/products/martillo-stanley-16oz-thumb.jpg",
+    "alt_text": "Martillo de carpintero Stanley 16oz con mango de fibra de vidrio antideslizante"
+  },
+  "description": {
+    "short": "Martillo de carpintero profesional de 16oz con mango ergonómico de fibra de vidrio y cabeza forjada en acero de alta resistencia.",
+    "long": "El martillo de carpintero Stanley de 16oz es la herramienta ideal para trabajos de carpintería profesional y doméstica. Cuenta con una cabeza forjada en acero de alta resistencia y un mango ergonómico de fibra de vidrio que absorbe impactos y reduce la fatiga. El diseño antideslizante garantiza un agarre seguro incluso en condiciones húmedas. Incluye uña extraíble para mayor versatilidad en trabajos de demolición y extracción de clavos. Perfecto para carpinteros, constructores y entusiastas del bricolaje.",
+    "technical": "Peso cabeza: 16oz (454g)\nLongitud total: 33cm\nMaterial mango: Fibra de vidrio con recubrimiento antideslizante\nMaterial cabeza: Acero forjado templado\nTipo: Carpintero\nAcabado: Pulido y cromado\nGarantía: 12 meses"
+  },
+  "attributes": {
+    "dimensions": {
+      "length": 33,
+      "width": 12,
+      "height": 3,
+      "weight": 0.6
+    },
+    "material": "Acero forjado + Fibra de vidrio",
+    "color": "Negro/Amarillo",
+    "warranty_months": 12,
+    "country_of_origin": "USA",
+    "certifications": ["ANSI", "ISO 9001"],
+    "custom": {
+      "head_weight_oz": 16,
+      "handle_type": "Fiberglass",
+      "grip_type": "Anti-slip rubber",
+      "claw_type": "Curved"
+    }
+  },
+  "seo": {
+    "meta_title": "Martillo Carpintero Stanley 16oz | Ferretería Online",
+    "meta_description": "Compra el martillo de carpintero Stanley 16oz. Mango de fibra de vidrio, cabeza forjada en acero. Envío gratis en pedidos +$50.000. Garantía 12 meses.",
+    "keywords": ["martillo", "carpintero", "stanley", "herramientas", "16oz", "fibra de vidrio", "construcción"]
+  },
+  "related_products": ["FER-0002-SRL", "FER-0015-CLV", "FER-0023-TNZ"],
+  "supplier": {
+    "supplier_id": "PROV-001",
+    "supplier_name": "Distribuidora Stanley Colombia",
+    "supplier_sku": "STN-MRT-16OZ",
+    "cost_price": 18000
+  },
+  "status": "active",
+  "is_featured": true,
+  "is_new": false,
+  "is_bestseller": true,
+  "requires_assembly": false,
+  "requires_installation": false,
+  "hazardous_material": false,
+  "created_at": "2026-01-15T10:30:00Z",
+  "updated_at": "2026-02-20T14:45:00Z",
+  "created_by": "admin",
+  "updated_by": "product_manager"
+}
