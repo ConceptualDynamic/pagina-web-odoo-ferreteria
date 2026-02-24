@@ -9,7 +9,23 @@ Implementar un sitio transaccional y escalable en Odoo, con catálogo, checkout,
 - Repositorio: https://github.com/ConceptualDynamic/pagina-web-odoo-ferreteria
 - Planner (Plan): Software Development
 
+## Configuración Técnica
+
+### Documentación Odoo (Fase 1)
+- `docs/00-configuracion-tecnica-odoo.md` - Guía completa de instalación y configuración
+- `config/odoo.conf.template` - Template de configuración de Odoo
+- `config/modulos-requeridos.md` - Documentación de módulos requeridos
+- `config/checklist-validacion.md` - Checklist de validación del entorno
+
+### Módulos Requeridos
+- **Website** - Plataforma web base
+- **eCommerce** - Tienda en línea
+- **Inventory** - Gestión de inventario
+- **Sales** - Gestión de ventas
+- **CRM** - Gestión de leads y oportunidades
+
 ## Estructura documental
+- `docs/00-configuracion-tecnica-odoo.md` - ✅ Completado (Fase 1)
 - `docs/01-alcance-kpis.md`
 - `docs/02-roadmap-fases.md`
 - `docs/03-arquitectura-informacion.md`
