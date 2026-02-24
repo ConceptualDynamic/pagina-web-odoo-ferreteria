@@ -18,7 +18,11 @@ Implementar un sitio transaccional y escalable en Odoo, con catálogo, checkout,
 - `docs/06-pagos-envios-impuestos.md`
 - `docs/07-seo-y-contenido.md`
 - `docs/08-integraciones.md`
-- `docs/09-qa.md`
+- `docs/09-qa.md` - Checklist completo de QA
+- `docs/09-qa-ejecucion-guia.md` - Guía de ejecución de QA
+- `docs/09-qa-incidencias-template.md` - Template para registro de incidencias
+- `docs/09-qa-metricas-rendimiento.md` - Métricas y benchmarks de rendimiento
+- `docs/09-qa-compatibilidad-matriz.md` - Matriz de compatibilidad de navegadores/dispositivos
 - `docs/10-go-live-y-monitoreo.md`
 - `docs/11-matriz-github-planner.md`
 
