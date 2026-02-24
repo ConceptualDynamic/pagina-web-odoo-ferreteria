@@ -204,7 +204,7 @@ Estructura del pie de página:
 | Tipo de Página | Cantidad Estimada | Prioridad | Fase |
 |----------------|-------------------|-----------|------|
 | Home | 1 | Alta | MVP |
-| PLP (Product Listing Page) | ~45 (8 categorías + ~37 subcategorías) | Alta | MVP |
+| PLP (Product Listing Page) | 48 (8 categorías + 40 subcategorías) | Alta | MVP |
 | PDP (Product Detail Page) | Variable (~500-5000 productos) | Alta | MVP |
 | Páginas Estáticas | ~10 | Media | MVP |
 | Páginas de Usuario | ~4 | Media | Post-MVP |
@@ -589,12 +589,20 @@ Home → Ofertas → Productos en oferta → PDP → Agregar al carrito
 ### 5.2 Estructura de datos en Odoo
 
 #### Modelo: product.public.category
+Campos principales del modelo estándar de Odoo:
 ```python
-- name: char (nombre de categoría)
-- parent_id: many2one (categoría padre)
-- sequence: integer (orden)
-- website_description: html (descripción larga)
-- image: binary (imagen destacada)
+# Campos básicos
+name = fields.Char('Name', required=True, translate=True)
+parent_id = fields.Many2one('product.public.category', string='Parent Category', index=True)
+sequence = fields.Integer('Sequence', default=10)
+
+# Campos para sitio web
+website_description = fields.Html('Category Description', sanitize_attributes=False, translate=True)
+image = fields.Binary('Image', attachment=True)
+
+# Campos adicionales estándar
+child_id = fields.One2many('product.public.category', 'parent_id', string='Children Categories')
+parents_and_self = fields.Many2many('product.public.category', compute='_compute_parents_and_self')
 ```
 
 #### Configuración de menús
