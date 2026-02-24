@@ -8,7 +8,7 @@
         <field name="fixed_price">0.0</field>
         <field name="sequence">10</field>
         <field name="requires_heavy_handling">True</field>
-        <field name="max_weight">0</field><!-- Sin límite de peso -->
+        <field name="max_weight">999999</field><!-- Sin límite de peso (valor centinela) -->
         <field name="preparation_time">2.0</field>
         <field name="website_description">
             Recoge tu pedido en nuestra tienda física sin costo adicional.

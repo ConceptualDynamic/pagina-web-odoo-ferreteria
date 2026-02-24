@@ -33,7 +33,7 @@
                 </label>
                 <input type="text" name="partner_vat" class="form-control" 
                        placeholder="Número de identificación" required="required"
-                       pattern="[0-9]{6,10}" title="Ingrese un número válido de 6 a 10 dígitos"/>
+                       pattern="[0-9]{6,10}" title="NIT o Cédula de Ciudadanía: 6 a 10 dígitos numéricos"/>
             </div>
         </xpath>
         
@@ -65,7 +65,7 @@
     <!-- Order summary improvements -->
     <template id="checkout_order_summary" name="Order Summary" inherit_id="website_sale.cart_summary">
         <xpath expr="//table[@id='order_total_summary']//tr[@class='text-success']" position="before">
-            <tr t-if="website_sale_order.discount_amount &gt; 0">
+            <tr t-if="website_sale_order.discount_amount > 0">
                 <td class="text-success">
                     <strong>Descuento por cupón</strong>
                 </td>

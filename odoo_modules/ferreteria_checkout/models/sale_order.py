@@ -40,11 +40,12 @@ class SaleOrder(models.Model):
             for line in order.order_line:
                 product = line.product_id
                 if product.type == 'product':  # Solo productos almacenables
-                    available_qty = product.qty_available - product.outgoing_qty
-                    if available_qty < line.product_uom_qty:
+                    # Net available quantity after outgoing orders
+                    net_available_qty = product.qty_available - product.outgoing_qty
+                    if net_available_qty < line.product_uom_qty:
                         raise ValidationError(
                             f'Stock insuficiente para {product.name}.\n'
-                            f'Disponible: {available_qty:.0f} unidades\n'
+                            f'Disponible: {net_available_qty:.0f} unidades\n'
                             f'Solicitado: {line.product_uom_qty:.0f} unidades'
                         )
     

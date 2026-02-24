@@ -90,7 +90,10 @@ publicWidget.registry.FerreteriaCheckoutValidation = publicWidget.Widget.extend(
      */
     _showCouponMessage: function (message, type) {
         const $messageDiv = $('#coupon_message');
-        $messageDiv.html(`<div class="alert alert-${type}">${message}</div>`);
+        const $alert = $('<div class="alert"></div>')
+            .addClass('alert-' + type)
+            .text(message);  // Use .text() to prevent XSS
+        $messageDiv.html($alert);
     },
 
     /**
@@ -110,7 +113,8 @@ publicWidget.registry.FerreteriaCheckoutValidation = publicWidget.Widget.extend(
         // Validate required fields
         $form.find('[required]').each((index, field) => {
             const $field = $(field);
-            if (!$field.val() || $field.val().trim() === '') {
+            const value = $field.val();
+            if (!value || value.trim() === '') {
                 isValid = false;
                 this._showError($field, 'Este campo es obligatorio');
             }
@@ -147,14 +151,11 @@ publicWidget.registry.FerreteriaCheckoutValidation = publicWidget.Widget.extend(
      * Show global error message
      */
     _showGlobalError: function (message) {
-        const $alert = $(`
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                ${message}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        `);
+        const $alert = $('<div class="alert alert-danger alert-dismissible fade show" role="alert"></div>')
+            .text(message);
+        const $closeButton = $('<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>')
+            .append('<span aria-hidden="true">&times;</span>');
+        $alert.append($closeButton);
         $('#o_payment_form').prepend($alert);
         $('html, body').animate({ scrollTop: 0 }, 300);
     },

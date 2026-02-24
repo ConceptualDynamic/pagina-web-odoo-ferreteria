@@ -21,6 +21,7 @@ class ProductTemplate(models.Model):
         ('hazardous', 'Material peligroso'),
     ], string='Restricciones de envío', default='none')
     
+    @api.depends('weight')
     def _compute_is_heavy(self):
         """Marcar productos pesados automáticamente"""
         for product in self:

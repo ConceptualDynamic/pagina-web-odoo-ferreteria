@@ -3,6 +3,10 @@
 from odoo import http
 from odoo.http import request
 from odoo.addons.website_sale.controllers.main import WebsiteSale
+from odoo.exceptions import ValidationError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class FerreteriaCheckout(WebsiteSale):
@@ -16,9 +20,13 @@ class FerreteriaCheckout(WebsiteSale):
         if order:
             try:
                 order._check_stock_availability()
-            except Exception as e:
+            except ValidationError as e:
+                _logger.warning('Stock unavailable for order %s: %s', order.id, str(e))
                 request.session['sale_last_order_id'] = None
                 return request.redirect('/shop/cart?error=stock_unavailable')
+            except Exception as e:
+                _logger.error('Unexpected error checking stock for order %s: %s', order.id, str(e))
+                # Continue to checkout but log the error
         
         return super(FerreteriaCheckout, self).checkout(**post)
     
