@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="checkout_layout_custom" name="Checkout Custom Layout" inherit_id="website_sale.checkout_layout">
+        
+        <!-- Add customer type selector -->
+        <xpath expr="//div[@id='o_payment_form']//div[@class='row']" position="before">
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Tipo de cliente</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <select name="customer_type" class="form-control" required="required">
+                                    <option value="individual">Persona Natural</option>
+                                    <option value="company">Empresa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+        
+        <!-- Add VAT/ID field -->
+        <xpath expr="//input[@name='phone']" position="after">
+            <div class="form-group">
+                <label class="col-form-label" for="partner_vat">
+                    NIT / Cédula
+                    <span class="text-danger">*</span>
+                </label>
+                <input type="text" name="partner_vat" class="form-control" 
+                       placeholder="Número de identificación" required="required"
+                       pattern="[0-9]{6,10}" title="NIT o Cédula de Ciudadanía: 6 a 10 dígitos numéricos"/>
+            </div>
+        </xpath>
+        
+    </template>
+    
+    <!-- Coupon code input -->
+    <template id="checkout_coupon" name="Checkout Coupon" inherit_id="website_sale.payment">
+        <xpath expr="//div[@id='o_payment_form']" position="before">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0">¿Tienes un cupón de descuento?</h5>
+                </div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" id="coupon_code_input" class="form-control" 
+                               placeholder="Ingresa tu código de cupón"/>
+                        <div class="input-group-append">
+                            <button type="button" id="apply_coupon_btn" class="btn btn-primary">
+                                Aplicar
+                            </button>
+                        </div>
+                    </div>
+                    <div id="coupon_message" class="mt-2"></div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    
+    <!-- Order summary improvements -->
+    <template id="checkout_order_summary" name="Order Summary" inherit_id="website_sale.cart_summary">
+        <xpath expr="//table[@id='order_total_summary']//tr[@class='text-success']" position="before">
+            <tr t-if="website_sale_order.discount_amount > 0">
+                <td class="text-success">
+                    <strong>Descuento por cupón</strong>
+                </td>
+                <td class="text-end text-success">
+                    <span t-esc="'- ' + website_sale_order.discount_amount" 
+                          t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+    
+    <!-- Heavy product warning -->
+    <template id="cart_heavy_product_warning" name="Heavy Product Warning" inherit_id="website_sale.cart_lines">
+        <xpath expr="//table[@id='cart_products']" position="after">
+            <div class="alert alert-warning" t-if="any(line.product_id.is_heavy_product for line in website_sale_order.order_line)">
+                <i class="fa fa-exclamation-triangle"></i>
+                <strong>Atención:</strong> Su carrito contiene productos pesados. 
+                Solo estará disponible la opción de retiro en tienda.
+            </div>
+        </xpath>
+    </template>
+    
+</odoo>

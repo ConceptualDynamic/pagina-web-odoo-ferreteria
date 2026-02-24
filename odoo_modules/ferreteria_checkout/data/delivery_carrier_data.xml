@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Delivery Method: Retiro en tienda -->
+    <record id="delivery_carrier_pickup" model="delivery.carrier">
+        <field name="name">Retiro en tienda</field>
+        <field name="delivery_type">fixed</field>
+        <field name="fixed_price">0.0</field>
+        <field name="sequence">10</field>
+        <field name="requires_heavy_handling">True</field>
+        <field name="max_weight">999999</field><!-- Sin límite de peso (valor centinela) -->
+        <field name="preparation_time">2.0</field>
+        <field name="website_description">
+            Recoge tu pedido en nuestra tienda física sin costo adicional.
+            Tu pedido estará listo en aproximadamente 2 horas.
+        </field>
+    </record>
+    
+    <!-- Delivery Method: Envío estándar -->
+    <record id="delivery_carrier_standard" model="delivery.carrier">
+        <field name="name">Envío estándar (3-5 días)</field>
+        <field name="delivery_type">based_on_rule</field>
+        <field name="sequence">20</field>
+        <field name="requires_heavy_handling">False</field>
+        <field name="max_weight">30.0</field>
+        <field name="website_description">
+            Envío a domicilio en 3-5 días hábiles.
+            Disponible para productos de hasta 30kg.
+        </field>
+    </record>
+    
+    <!-- Price rules for standard delivery -->
+    <record id="delivery_rule_standard_1" model="delivery.price.rule">
+        <field name="carrier_id" ref="delivery_carrier_standard"/>
+        <field name="variable">weight</field>
+        <field name="operator">&lt;=</field>
+        <field name="max_value">5.0</field>
+        <field name="list_base_price">15000</field>
+    </record>
+    
+    <record id="delivery_rule_standard_2" model="delivery.price.rule">
+        <field name="carrier_id" ref="delivery_carrier_standard"/>
+        <field name="variable">weight</field>
+        <field name="operator">&lt;=</field>
+        <field name="max_value">15.0</field>
+        <field name="list_base_price">25000</field>
+    </record>
+    
+    <record id="delivery_rule_standard_3" model="delivery.price.rule">
+        <field name="carrier_id" ref="delivery_carrier_standard"/>
+        <field name="variable">weight</field>
+        <field name="operator">&lt;=</field>
+        <field name="max_value">30.0</field>
+        <field name="list_base_price">40000</field>
+    </record>
+    
+    <!-- Delivery Method: Envío express -->
+    <record id="delivery_carrier_express" model="delivery.carrier">
+        <field name="name">Envío express (1-2 días)</field>
+        <field name="delivery_type">based_on_rule</field>
+        <field name="sequence">30</field>
+        <field name="requires_heavy_handling">False</field>
+        <field name="max_weight">15.0</field>
+        <field name="website_description">
+            Envío express en 1-2 días hábiles.
+            Disponible para productos de hasta 15kg.
+        </field>
+    </record>
+    
+    <!-- Price rules for express delivery -->
+    <record id="delivery_rule_express_1" model="delivery.price.rule">
+        <field name="carrier_id" ref="delivery_carrier_express"/>
+        <field name="variable">weight</field>
+        <field name="operator">&lt;=</field>
+        <field name="max_value">5.0</field>
+        <field name="list_base_price">25000</field>
+    </record>
+    
+    <record id="delivery_rule_express_2" model="delivery.price.rule">
+        <field name="carrier_id" ref="delivery_carrier_express"/>
+        <field name="variable">weight</field>
+        <field name="operator">&lt;=</field>
+        <field name="max_value">15.0</field>
+        <field name="list_base_price">40000</field>
+    </record>
+    
+</odoo>

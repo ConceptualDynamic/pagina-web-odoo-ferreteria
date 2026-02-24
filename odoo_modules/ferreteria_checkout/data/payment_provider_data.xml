@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Payment Provider: Pago en tienda -->
+    <record id="payment_provider_store" model="payment.provider">
+        <field name="name">Pago en tienda</field>
+        <field name="code">store_payment</field>
+        <field name="state">enabled</field>
+        <field name="sequence">10</field>
+        <field name="store_instructions" type="html">
+            <![CDATA[
+            <div class="alert alert-info">
+                <h4>Instrucciones para pago en tienda</h4>
+                <p>
+                    <strong>1.</strong> Completa tu pedido y anota el número de orden<br/>
+                    <strong>2.</strong> Acércate a nuestra tienda física con tu número de pedido<br/>
+                    <strong>3.</strong> Realiza el pago en caja<br/>
+                    <strong>4.</strong> Recibe tu pedido inmediatamente o según disponibilidad
+                </p>
+                <p>
+                    <strong>Horario de atención:</strong><br/>
+                    Lunes a Viernes: 8:00 AM - 6:00 PM<br/>
+                    Sábados: 8:00 AM - 2:00 PM
+                </p>
+            </div>
+            ]]>
+        </field>
+    </record>
+    
+</odoo>
