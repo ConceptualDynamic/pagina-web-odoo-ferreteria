@@ -86,7 +86,7 @@ function trackBeginCheckout(cartItems, cartTotal) {
 }
 
 // 6. Agregar información de envío
-function trackAddShippingInfo(cartItems, shippingTier) {
+function trackAddShippingInfo(cartItems, cartTotal, shippingTier) {
     if (typeof gtag === 'undefined') return;
     
     const items = cartItems.map(formatProductForGA4);
@@ -100,7 +100,7 @@ function trackAddShippingInfo(cartItems, shippingTier) {
 }
 
 // 7. Agregar información de pago
-function trackAddPaymentInfo(cartItems, paymentType) {
+function trackAddPaymentInfo(cartItems, cartTotal, paymentType) {
     if (typeof gtag === 'undefined') return;
     
     const items = cartItems.map(formatProductForGA4);
