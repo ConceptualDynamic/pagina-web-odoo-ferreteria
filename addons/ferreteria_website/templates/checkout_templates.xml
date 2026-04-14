@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Mejoras al checkout -->
+        <template id="checkout_ferreteria" inherit_id="website_sale.cart" name="Ferretería Cart Enhancement">
+            <!-- Mostrar información de envío gratis -->
+            <xpath expr="//div[@id='cart_total']" position="before">
+                <t t-if="website.free_shipping_threshold and website.free_shipping_threshold > 0">
+                    <t t-set="remaining" t-value="website.free_shipping_threshold - website_sale_order.amount_untaxed"/>
+                    <div class="alert alert-info mb-3" t-if="remaining > 0">
+                        <i class="fa fa-truck mr-2"></i>
+                        ¡Agrega 
+                        <strong>
+                            <t t-esc="website_sale_order.currency_id.symbol"/>
+                            <t t-esc="'%.2f' % remaining"/>
+                        </strong> 
+                        más para obtener <strong>envío gratis</strong>!
+                    </div>
+                    <div class="alert alert-success mb-3" t-else="">
+                        <i class="fa fa-check-circle mr-2"></i>
+                        ¡Felicidades! Tu compra califica para <strong>envío gratis</strong>.
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Mejoras al proceso de checkout -->
+        <template id="checkout_address_ferreteria" inherit_id="website_sale.checkout" name="Ferretería Checkout Enhancement">
+            <!-- Indicador de pasos -->
+            <xpath expr="//main" position="before">
+                <div class="container mt-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <nav aria-label="Progreso de compra">
+                                <ol class="breadcrumb bg-transparent px-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="/shop/cart"><i class="fa fa-shopping-cart mr-1"></i> Carrito</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        <i class="fa fa-map-marker mr-1"></i> Dirección
+                                    </li>
+                                    <li class="breadcrumb-item text-muted">
+                                        <i class="fa fa-credit-card mr-1"></i> Pago
+                                    </li>
+                                    <li class="breadcrumb-item text-muted">
+                                        <i class="fa fa-check mr-1"></i> Confirmación
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!-- Opción de retiro en tienda -->
+        <template id="delivery_pickup_option" inherit_id="website_sale.checkout" name="Opción Retiro en Tienda">
+            <xpath expr="//div[@id='delivery_carrier']" position="inside">
+                <t t-if="website.pickup_available">
+                    <div class="custom-control custom-radio mt-3 mb-3">
+                        <input type="radio" 
+                               id="pickup_in_store" 
+                               name="delivery_type" 
+                               value="pickup" 
+                               class="custom-control-input"/>
+                        <label class="custom-control-label" for="pickup_in_store">
+                            <strong><i class="fa fa-store mr-2"></i>Retiro en Tienda</strong>
+                            <span class="text-success ml-2">GRATIS</span>
+                            <br/>
+                            <small class="text-muted" t-if="website.store_address">
+                                <t t-esc="website.store_address"/>
+                            </small>
+                            <br/>
+                            <small class="text-muted" t-if="website.store_hours">
+                                Horario: <t t-esc="website.store_hours"/>
+                            </small>
+                        </label>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Página de confirmación mejorada -->
+        <template id="confirmation_ferreteria" inherit_id="website_sale.confirmation" name="Ferretería Confirmation Enhancement">
+            <xpath expr="//div[hasclass('oe_website_sale_tx_status')]" position="after">
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fa fa-question-circle mr-2"></i>¿Necesitas Ayuda?
+                                </h5>
+                                <p class="card-text">
+                                    Si tienes alguna pregunta sobre tu pedido, no dudes en contactarnos.
+                                </p>
+                                <t t-if="website.whatsapp_number">
+                                    <a t-att-href="website.get_whatsapp_url('Hola, tengo una consulta sobre mi pedido #' + str(order.name))" 
+                                       target="_blank" 
+                                       class="btn btn-success">
+                                        <i class="fa fa-whatsapp mr-1"></i> WhatsApp
+                                    </a>
+                                </t>
+                                <a href="/contacto" class="btn btn-outline-secondary ml-2">
+                                    <i class="fa fa-envelope mr-1"></i> Contacto
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fa fa-clock-o mr-2"></i>Próximos Pasos
+                                </h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2">
+                                        <i class="fa fa-check text-success mr-2"></i>
+                                        Recibirás un correo de confirmación
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fa fa-check text-success mr-2"></i>
+                                        Prepararemos tu pedido
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-check text-success mr-2"></i>
+                                        Te notificaremos cuando esté en camino
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!-- Evento de compra para Analytics -->
+        <template id="confirmation_analytics" inherit_id="website_sale.confirmation" name="Purchase Analytics Event">
+            <xpath expr="//div[hasclass('oe_website_sale_tx_status')]" position="after">
+                <t t-if="website.ga4_measurement_id and order">
+                    <script>
+                        // GA4 Purchase Event
+                        gtag('event', 'purchase', {
+                            transaction_id: '<t t-esc="order.name"/>',
+                            value: <t t-esc="order.amount_total"/>,
+                            currency: '<t t-esc="order.currency_id.name"/>',
+                            tax: <t t-esc="order.amount_tax"/>,
+                            shipping: <t t-esc="order.delivery_price if hasattr(order, 'delivery_price') else 0"/>,
+                            items: [
+                                <t t-foreach="order.order_line" t-as="line">
+                                {
+                                    item_id: '<t t-esc="line.product_id.default_code or line.product_id.id"/>',
+                                    item_name: '<t t-esc="line.product_id.name"/>',
+                                    item_category: '<t t-esc="line.product_id.categ_id.name"/>',
+                                    price: <t t-esc="line.price_unit"/>,
+                                    quantity: <t t-esc="int(line.product_uom_qty)"/>
+                                }<t t-if="not line_last">,</t>
+                                </t>
+                            ]
+                        });
+                    </script>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Menú Principal del Sitio Web -->
+        
+        <!-- Inicio (ya existe por defecto, pero aseguramos la secuencia) -->
+        
+        <!-- Productos -->
+        <record id="menu_products" model="website.menu">
+            <field name="name">Productos</field>
+            <field name="url">/shop</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">20</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <!-- Marcas -->
+        <record id="menu_brands" model="website.menu">
+            <field name="name">Marcas</field>
+            <field name="url">/shop?filter_by_brand=1</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">30</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <!-- Ofertas -->
+        <record id="menu_offers" model="website.menu">
+            <field name="name">Ofertas</field>
+            <field name="url">/shop?filter_by_offers=1</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">40</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <!-- Nosotros -->
+        <record id="menu_about" model="website.menu">
+            <field name="name">Nosotros</field>
+            <field name="url">/nosotros</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">50</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <!-- Contacto -->
+        <record id="menu_contact" model="website.menu">
+            <field name="name">Contacto</field>
+            <field name="url">/contacto</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">60</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <!-- Submenú de Productos (categorías principales) -->
+        <record id="menu_products_herramientas_manuales" model="website.menu">
+            <field name="name">Herramientas Manuales</field>
+            <field name="url">/shop/category/herramientas-manuales</field>
+            <field name="parent_id" ref="menu_products"/>
+            <field name="sequence">10</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_products_herramientas_electricas" model="website.menu">
+            <field name="name">Herramientas Eléctricas</field>
+            <field name="url">/shop/category/herramientas-electricas</field>
+            <field name="parent_id" ref="menu_products"/>
+            <field name="sequence">20</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_products_tornilleria" model="website.menu">
+            <field name="name">Tornillería y Fijaciones</field>
+            <field name="url">/shop/category/tornilleria-y-fijaciones</field>
+            <field name="parent_id" ref="menu_products"/>
+            <field name="sequence">30</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_products_pintura" model="website.menu">
+            <field name="name">Pintura y Accesorios</field>
+            <field name="url">/shop/category/pintura-y-accesorios</field>
+            <field name="parent_id" ref="menu_products"/>
+            <field name="sequence">40</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_products_plomeria" model="website.menu">
+            <field name="name">Plomería</field>
+            <field name="url">/shop/category/plomeria</field>
+            <field name="parent_id" ref="menu_products"/>
+            <field name="sequence">50</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_products_electricidad" model="website.menu">
+            <field name="name">Electricidad</field>
+            <field name="url">/shop/category/electricidad</field>
+            <field name="parent_id" ref="menu_products"/>
+            <field name="sequence">60</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_products_seguridad" model="website.menu">
+            <field name="name">Seguridad Industrial</field>
+            <field name="url">/shop/category/seguridad-industrial</field>
+            <field name="parent_id" ref="menu_products"/>
+            <field name="sequence">70</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_products_jardineria" model="website.menu">
+            <field name="name">Jardinería</field>
+            <field name="url">/shop/category/jardineria</field>
+            <field name="parent_id" ref="menu_products"/>
+            <field name="sequence">80</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <!-- Menú del Footer -->
+        <record id="menu_footer_ayuda" model="website.menu">
+            <field name="name">Ayuda</field>
+            <field name="url">#</field>
+            <field name="parent_id" ref="website.footer_menu"/>
+            <field name="sequence">10</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_footer_faq" model="website.menu">
+            <field name="name">Preguntas Frecuentes</field>
+            <field name="url">/faq</field>
+            <field name="parent_id" ref="menu_footer_ayuda"/>
+            <field name="sequence">10</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_footer_envios" model="website.menu">
+            <field name="name">Envíos y Entregas</field>
+            <field name="url">/politica-envios</field>
+            <field name="parent_id" ref="menu_footer_ayuda"/>
+            <field name="sequence">20</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_footer_devoluciones" model="website.menu">
+            <field name="name">Devoluciones</field>
+            <field name="url">/politica-devoluciones</field>
+            <field name="parent_id" ref="menu_footer_ayuda"/>
+            <field name="sequence">30</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_footer_legal" model="website.menu">
+            <field name="name">Legal</field>
+            <field name="url">#</field>
+            <field name="parent_id" ref="website.footer_menu"/>
+            <field name="sequence">20</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_footer_terminos" model="website.menu">
+            <field name="name">Términos y Condiciones</field>
+            <field name="url">/terminos-condiciones</field>
+            <field name="parent_id" ref="menu_footer_legal"/>
+            <field name="sequence">10</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_footer_privacidad" model="website.menu">
+            <field name="name">Política de Privacidad</field>
+            <field name="url">/politica-privacidad</field>
+            <field name="parent_id" ref="menu_footer_legal"/>
+            <field name="sequence">20</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- ===== ATRIBUTOS DE PRODUCTO ===== -->
+
+        <!-- Atributo: Marca -->
+        <record id="product_attribute_brand" model="product.attribute">
+            <field name="name">Marca</field>
+            <field name="display_type">radio</field>
+            <field name="create_variant">no_variant</field>
+        </record>
+
+        <!-- Valores de Marca -->
+        <record id="product_attribute_value_bosch" model="product.attribute.value">
+            <field name="name">Bosch</field>
+            <field name="attribute_id" ref="product_attribute_brand"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="product_attribute_value_makita" model="product.attribute.value">
+            <field name="name">Makita</field>
+            <field name="attribute_id" ref="product_attribute_brand"/>
+            <field name="sequence">2</field>
+        </record>
+        <record id="product_attribute_value_dewalt" model="product.attribute.value">
+            <field name="name">DeWalt</field>
+            <field name="attribute_id" ref="product_attribute_brand"/>
+            <field name="sequence">3</field>
+        </record>
+        <record id="product_attribute_value_milwaukee" model="product.attribute.value">
+            <field name="name">Milwaukee</field>
+            <field name="attribute_id" ref="product_attribute_brand"/>
+            <field name="sequence">4</field>
+        </record>
+        <record id="product_attribute_value_stanley" model="product.attribute.value">
+            <field name="name">Stanley</field>
+            <field name="attribute_id" ref="product_attribute_brand"/>
+            <field name="sequence">5</field>
+        </record>
+        <record id="product_attribute_value_truper" model="product.attribute.value">
+            <field name="name">Truper</field>
+            <field name="attribute_id" ref="product_attribute_brand"/>
+            <field name="sequence">6</field>
+        </record>
+
+        <!-- Atributo: Potencia -->
+        <record id="product_attribute_power" model="product.attribute">
+            <field name="name">Potencia</field>
+            <field name="display_type">radio</field>
+            <field name="create_variant">no_variant</field>
+        </record>
+
+        <!-- Valores de Potencia -->
+        <record id="product_attribute_value_500w" model="product.attribute.value">
+            <field name="name">500W</field>
+            <field name="attribute_id" ref="product_attribute_power"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="product_attribute_value_650w" model="product.attribute.value">
+            <field name="name">650W</field>
+            <field name="attribute_id" ref="product_attribute_power"/>
+            <field name="sequence">2</field>
+        </record>
+        <record id="product_attribute_value_750w" model="product.attribute.value">
+            <field name="name">750W</field>
+            <field name="attribute_id" ref="product_attribute_power"/>
+            <field name="sequence">3</field>
+        </record>
+        <record id="product_attribute_value_850w" model="product.attribute.value">
+            <field name="name">850W</field>
+            <field name="attribute_id" ref="product_attribute_power"/>
+            <field name="sequence">4</field>
+        </record>
+        <record id="product_attribute_value_1000w" model="product.attribute.value">
+            <field name="name">1000W</field>
+            <field name="attribute_id" ref="product_attribute_power"/>
+            <field name="sequence">5</field>
+        </record>
+        <record id="product_attribute_value_1200w" model="product.attribute.value">
+            <field name="name">1200W</field>
+            <field name="attribute_id" ref="product_attribute_power"/>
+            <field name="sequence">6</field>
+        </record>
+
+        <!-- Atributo: Voltaje -->
+        <record id="product_attribute_voltage" model="product.attribute">
+            <field name="name">Voltaje</field>
+            <field name="display_type">radio</field>
+            <field name="create_variant">dynamic</field>
+        </record>
+
+        <!-- Valores de Voltaje -->
+        <record id="product_attribute_value_12v" model="product.attribute.value">
+            <field name="name">12V</field>
+            <field name="attribute_id" ref="product_attribute_voltage"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="product_attribute_value_18v" model="product.attribute.value">
+            <field name="name">18V</field>
+            <field name="attribute_id" ref="product_attribute_voltage"/>
+            <field name="sequence">2</field>
+        </record>
+        <record id="product_attribute_value_20v" model="product.attribute.value">
+            <field name="name">20V</field>
+            <field name="attribute_id" ref="product_attribute_voltage"/>
+            <field name="sequence">3</field>
+        </record>
+        <record id="product_attribute_value_110v" model="product.attribute.value">
+            <field name="name">110V</field>
+            <field name="attribute_id" ref="product_attribute_voltage"/>
+            <field name="sequence">4</field>
+        </record>
+        <record id="product_attribute_value_220v" model="product.attribute.value">
+            <field name="name">220V</field>
+            <field name="attribute_id" ref="product_attribute_voltage"/>
+            <field name="sequence">5</field>
+        </record>
+
+        <!-- Atributo: Material -->
+        <record id="product_attribute_material" model="product.attribute">
+            <field name="name">Material</field>
+            <field name="display_type">radio</field>
+            <field name="create_variant">no_variant</field>
+        </record>
+
+        <!-- Valores de Material -->
+        <record id="product_attribute_value_acero" model="product.attribute.value">
+            <field name="name">Acero</field>
+            <field name="attribute_id" ref="product_attribute_material"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="product_attribute_value_acero_inox" model="product.attribute.value">
+            <field name="name">Acero Inoxidable</field>
+            <field name="attribute_id" ref="product_attribute_material"/>
+            <field name="sequence">2</field>
+        </record>
+        <record id="product_attribute_value_cromo_vanadio" model="product.attribute.value">
+            <field name="name">Cromo Vanadio</field>
+            <field name="attribute_id" ref="product_attribute_material"/>
+            <field name="sequence">3</field>
+        </record>
+        <record id="product_attribute_value_plastico" model="product.attribute.value">
+            <field name="name">Plástico</field>
+            <field name="attribute_id" ref="product_attribute_material"/>
+            <field name="sequence">4</field>
+        </record>
+
+        <!-- Atributo: Tamaño/Medida -->
+        <record id="product_attribute_size" model="product.attribute">
+            <field name="name">Medida</field>
+            <field name="display_type">select</field>
+            <field name="create_variant">dynamic</field>
+        </record>
+
+        <!-- Atributo: Color -->
+        <record id="product_attribute_color" model="product.attribute">
+            <field name="name">Color</field>
+            <field name="display_type">color</field>
+            <field name="create_variant">dynamic</field>
+        </record>
+
+        <!-- Valores de Color comunes -->
+        <record id="product_attribute_value_negro" model="product.attribute.value">
+            <field name="name">Negro</field>
+            <field name="attribute_id" ref="product_attribute_color"/>
+            <field name="html_color">#000000</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="product_attribute_value_azul" model="product.attribute.value">
+            <field name="name">Azul</field>
+            <field name="attribute_id" ref="product_attribute_color"/>
+            <field name="html_color">#0066CC</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="product_attribute_value_rojo" model="product.attribute.value">
+            <field name="name">Rojo</field>
+            <field name="attribute_id" ref="product_attribute_color"/>
+            <field name="html_color">#CC0000</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="product_attribute_value_amarillo" model="product.attribute.value">
+            <field name="name">Amarillo</field>
+            <field name="attribute_id" ref="product_attribute_color"/>
+            <field name="html_color">#FFD700</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="product_attribute_value_verde" model="product.attribute.value">
+            <field name="name">Verde</field>
+            <field name="attribute_id" ref="product_attribute_color"/>
+            <field name="html_color">#228B22</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <!-- Atributo: Uso Recomendado -->
+        <record id="product_attribute_use" model="product.attribute">
+            <field name="name">Uso Recomendado</field>
+            <field name="display_type">radio</field>
+            <field name="create_variant">no_variant</field>
+        </record>
+
+        <!-- Valores de Uso -->
+        <record id="product_attribute_value_hogar" model="product.attribute.value">
+            <field name="name">Hogar</field>
+            <field name="attribute_id" ref="product_attribute_use"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="product_attribute_value_profesional" model="product.attribute.value">
+            <field name="name">Profesional</field>
+            <field name="attribute_id" ref="product_attribute_use"/>
+            <field name="sequence">2</field>
+        </record>
+        <record id="product_attribute_value_industrial" model="product.attribute.value">
+            <field name="name">Industrial</field>
+            <field name="attribute_id" ref="product_attribute_use"/>
+            <field name="sequence">3</field>
+        </record>
+    </data>
+</odoo>

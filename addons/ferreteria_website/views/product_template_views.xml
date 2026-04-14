@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de Formulario de Producto Extendida -->
+        <record id="product_template_form_view_ferreteria" model="ir.ui.view">
+            <field name="name">product.template.form.ferreteria</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Agregar página de Ferretería -->
+                <xpath expr="//page[@name='sales']" position="after">
+                    <page string="Ferretería" name="ferreteria">
+                        <group>
+                            <group string="Información de Marca">
+                                <field name="brand_id"/>
+                                <field name="model_name"/>
+                                <field name="warranty_months"/>
+                                <field name="warranty_description"/>
+                            </group>
+                            <group string="Clasificación">
+                                <field name="recommended_use"/>
+                                <field name="has_complete_data" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Descripciones">
+                            <field name="short_description" placeholder="Descripción breve para listados (máx. 160 caracteres)"/>
+                            <field name="technical_specs" placeholder="Especificaciones técnicas detalladas"/>
+                        </group>
+                        <group>
+                            <group string="Dimensiones del Paquete">
+                                <field name="package_weight"/>
+                                <field name="package_length"/>
+                                <field name="package_width"/>
+                                <field name="package_height"/>
+                            </group>
+                            <group string="SEO y Documentación">
+                                <field name="seo_keywords"/>
+                                <field name="datasheet_url" widget="url"/>
+                                <field name="manual_url" widget="url"/>
+                            </group>
+                        </group>
+                        <group string="Productos Compatibles">
+                            <field name="compatible_product_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Vista de Lista de Producto Extendida -->
+        <record id="product_template_tree_view_ferreteria" model="ir.ui.view">
+            <field name="name">product.template.tree.ferreteria</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="brand_id" optional="show"/>
+                    <field name="has_complete_data" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Vista de Búsqueda de Producto Extendida -->
+        <record id="product_template_search_view_ferreteria" model="ir.ui.view">
+            <field name="name">product.template.search.ferreteria</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="brand_id"/>
+                    <field name="recommended_use"/>
+                </xpath>
+                <xpath expr="//filter[@name='consumable']" position="after">
+                    <separator/>
+                    <filter string="Datos Completos" name="filter_complete" domain="[('has_complete_data', '=', True)]"/>
+                    <filter string="Datos Incompletos" name="filter_incomplete" domain="[('has_complete_data', '=', False)]"/>
+                    <separator/>
+                    <filter string="Uso: Hogar" name="filter_home" domain="[('recommended_use', '=', 'home')]"/>
+                    <filter string="Uso: Profesional" name="filter_professional" domain="[('recommended_use', '=', 'professional')]"/>
+                    <filter string="Uso: Industrial" name="filter_industrial" domain="[('recommended_use', '=', 'industrial')]"/>
+                </xpath>
+                <xpath expr="//group" position="inside">
+                    <filter string="Marca" name="group_brand" context="{'group_by': 'brand_id'}"/>
+                    <filter string="Uso Recomendado" name="group_use" context="{'group_by': 'recommended_use'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Vista de Formulario de Marca -->
+        <record id="product_brand_form_view" model="ir.ui.view">
+            <field name="name">product.brand.form</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <form string="Marca">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archivado" bg_color="bg-danger" invisible="active"/>
+                        <field name="logo" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Nombre de la marca"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="website_url" widget="url"/>
+                                <field name="is_featured"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="product_count"/>
+                            </group>
+                        </group>
+                        <group string="Descripción">
+                            <field name="description" nolabel="1" colspan="2"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de Lista de Marca -->
+        <record id="product_brand_tree_view" model="ir.ui.view">
+            <field name="name">product.brand.tree</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <tree string="Marcas">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="is_featured"/>
+                    <field name="product_count"/>
+                    <field name="active" column_invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista Kanban de Marca -->
+        <record id="product_brand_kanban_view" model="ir.ui.view">
+            <field name="name">product.brand.kanban</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="logo"/>
+                    <field name="product_count"/>
+                    <field name="is_featured"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <field name="logo" widget="image"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="o_kanban_tags_section">
+                                        <span t-if="record.is_featured.raw_value" class="badge badge-success">Destacada</span>
+                                    </div>
+                                    <div class="text-muted">
+                                        <field name="product_count"/> productos
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Vista de Búsqueda de Marca -->
+        <record id="product_brand_search_view" model="ir.ui.view">
+            <field name="name">product.brand.search</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Marcas">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <filter string="Destacadas" name="filter_featured" domain="[('is_featured', '=', True)]"/>
+                    <filter string="Archivadas" name="filter_archived" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <filter string="Con Productos" name="filter_with_products" domain="[('product_count', '>', 0)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Acción de Marca -->
+        <record id="product_brand_action" model="ir.actions.act_window">
+            <field name="name">Marcas</field>
+            <field name="res_model">product.brand</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="product_brand_search_view"/>
+            <field name="context">{'search_default_filter_featured': 0}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crear una nueva marca
+                </p>
+                <p>
+                    Las marcas le permiten organizar sus productos y mostrar 
+                    logotipos de fabricantes en su sitio web.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menú de Marcas -->
+        <menuitem id="menu_product_brand"
+                  name="Marcas"
+                  parent="sale.product_menu_catalog"
+                  action="product_brand_action"
+                  sequence="5"/>
+
+        <!-- Acción para verificar calidad de catálogo -->
+        <record id="action_check_catalog_quality" model="ir.actions.server">
+            <field name="name">Verificar Calidad de Catálogo</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+action = records.action_check_catalog_quality()
+            </field>
+        </record>
+    </data>
+</odoo>

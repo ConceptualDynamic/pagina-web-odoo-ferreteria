@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extensión de la página de producto (PDP) -->
+        <template id="product_ferreteria" inherit_id="website_sale.product" name="Ferretería Product Page">
+            <!-- Agregar descripción corta después del nombre -->
+            <xpath expr="//h1[@itemprop='name']" position="after">
+                <t t-if="product.short_description">
+                    <p class="lead text-muted mb-3" t-esc="product.short_description"/>
+                </t>
+            </xpath>
+
+            <!-- Agregar badge de marca -->
+            <xpath expr="//div[@id='product_details']" position="inside">
+                <t t-if="product.brand_id">
+                    <div class="mt-2 mb-3">
+                        <span class="badge badge-secondary">
+                            <i class="fa fa-tag mr-1"></i>
+                            <t t-esc="product.brand_id.name"/>
+                        </span>
+                        <t t-if="product.model_name">
+                            <span class="text-muted ml-2">
+                                Modelo: <t t-esc="product.model_name"/>
+                            </span>
+                        </t>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Especificaciones técnicas en PDP -->
+        <template id="product_technical_specs" inherit_id="website_sale.product" name="Especificaciones Técnicas">
+            <xpath expr="//div[@id='product_full_description']" position="after">
+                <t t-if="product.technical_specs">
+                    <div class="mt-4" id="product_technical_specs">
+                        <h3 class="mb-3">
+                            <i class="fa fa-list-ul mr-2"></i>Especificaciones Técnicas
+                        </h3>
+                        <div class="border rounded p-3 bg-light">
+                            <t t-raw="product.technical_specs"/>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- Garantía -->
+                <t t-if="product.warranty_months">
+                    <div class="mt-3">
+                        <p class="mb-1">
+                            <i class="fa fa-shield text-success mr-2"></i>
+                            <strong>Garantía: </strong>
+                            <t t-esc="product.warranty_months"/> meses
+                        </p>
+                        <t t-if="product.warranty_description">
+                            <small class="text-muted" t-esc="product.warranty_description"/>
+                        </t>
+                    </div>
+                </t>
+
+                <!-- Documentos -->
+                <t t-if="product.datasheet_url or product.manual_url">
+                    <div class="mt-4">
+                        <h5>Documentación</h5>
+                        <t t-if="product.datasheet_url">
+                            <a t-att-href="product.datasheet_url" target="_blank" class="btn btn-outline-secondary btn-sm mr-2">
+                                <i class="fa fa-file-pdf-o mr-1"></i> Ficha Técnica
+                            </a>
+                        </t>
+                        <t t-if="product.manual_url">
+                            <a t-att-href="product.manual_url" target="_blank" class="btn btn-outline-secondary btn-sm">
+                                <i class="fa fa-book mr-1"></i> Manual de Usuario
+                            </a>
+                        </t>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Productos compatibles -->
+        <template id="product_compatible_products" inherit_id="website_sale.product" name="Productos Compatibles">
+            <xpath expr="//div[@id='product_full_description']/.." position="after">
+                <t t-if="product.compatible_product_ids">
+                    <section class="container mt-5">
+                        <h3 class="mb-4">
+                            <i class="fa fa-puzzle-piece mr-2"></i>Productos Compatibles
+                        </h3>
+                        <div class="row">
+                            <t t-foreach="product.compatible_product_ids[:4]" t-as="compatible">
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="card h-100">
+                                        <a t-attf-href="/shop/product/#{compatible.id}">
+                                            <img t-att-src="image_data_uri(compatible.image_256)" 
+                                                 class="card-img-top" 
+                                                 t-att-alt="compatible.name"/>
+                                        </a>
+                                        <div class="card-body p-2">
+                                            <a t-attf-href="/shop/product/#{compatible.id}" class="text-decoration-none">
+                                                <h6 class="card-title mb-1 text-truncate" t-esc="compatible.name"/>
+                                            </a>
+                                            <p class="card-text mb-0">
+                                                <strong t-esc="compatible.currency_id.symbol"/>
+                                                <strong t-esc="'%.2f' % compatible.list_price"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </section>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Mejoras al listado de productos (PLP) -->
+        <template id="products_list_ferreteria" inherit_id="website_sale.products" name="Ferretería Product List">
+            <!-- Agregar información adicional a las tarjetas de producto -->
+            <xpath expr="//form[hasclass('o_wsale_product_information')]" position="inside">
+                <t t-if="product.brand_id">
+                    <small class="text-muted d-block">
+                        <t t-esc="product.brand_id.name"/>
+                    </small>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Datos estructurados JSON-LD para producto -->
+        <template id="product_jsonld" inherit_id="website_sale.product" name="Product JSON-LD">
+            <xpath expr="//head" position="inside">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org/",
+                    "@type": "Product",
+                    "name": "<t t-esc="product.name"/>",
+                    "image": "<t t-esc="request.httprequest.host_url + 'web/image/product.template/%s/image_1920' % product.id"/>",
+                    "description": "<t t-esc="product.description_sale or product.short_description or ''"/>",
+                    <t t-if="product.brand_id">
+                    "brand": {
+                        "@type": "Brand",
+                        "name": "<t t-esc="product.brand_id.name"/>"
+                    },
+                    </t>
+                    "sku": "<t t-esc="product.default_code or ''"/>",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "<t t-esc="request.httprequest.url"/>",
+                        "priceCurrency": "<t t-esc="product.currency_id.name"/>",
+                        "price": "<t t-esc="product.list_price"/>",
+                        "availability": "<t t-esc="'https://schema.org/InStock' if product.is_published else 'https://schema.org/OutOfStock'/>"
+                    }
+                }
+                </script>
+            </xpath>
+        </template>
+
+        <!-- Eventos de Analytics para eCommerce -->
+        <template id="product_analytics_events" inherit_id="website_sale.product" name="Product Analytics Events">
+            <xpath expr="//div[@id='product_detail']" position="attributes">
+                <attribute name="t-att-data-product-id" add="product.id" separator=" "/>
+                <attribute name="t-att-data-product-name" add="product.name" separator=" "/>
+                <attribute name="t-att-data-product-price" add="product.list_price" separator=" "/>
+                <attribute name="t-att-data-product-category" add="product.categ_id.name" separator=" "/>
+                <attribute name="t-att-data-product-brand" add="product.brand_id.name if product.brand_id else ''" separator=" "/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

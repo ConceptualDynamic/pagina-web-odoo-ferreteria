@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Página: Nosotros -->
+        <record id="page_nosotros" model="website.page">
+            <field name="name">Nosotros</field>
+            <field name="url">/nosotros</field>
+            <field name="website_indexed">True</field>
+            <field name="website_published">True</field>
+            <field name="view_id" ref="view_nosotros"/>
+        </record>
+
+        <record id="view_nosotros" model="ir.ui.view">
+            <field name="name">Nosotros</field>
+            <field name="type">qweb</field>
+            <field name="key">ferreteria_website.nosotros</field>
+            <field name="arch" type="xml">
+                <t t-name="ferreteria_website.nosotros">
+                    <t t-call="website.layout">
+                        <div id="wrap" class="oe_structure">
+                            <!-- Hero Section -->
+                            <section class="pt-5 pb-5 bg-secondary text-white">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <h1>Sobre Nosotros</h1>
+                                            <p class="lead">Tu ferretería de confianza con más de XX años de experiencia.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Historia -->
+                            <section class="pt-5 pb-5">
+                                <div class="container">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-6">
+                                            <h2>Nuestra Historia</h2>
+                                            <p>
+                                                Fundada en [año], nuestra ferretería nació con la misión de 
+                                                ofrecer productos de calidad a precios justos. A lo largo de 
+                                                los años, hemos crecido junto a nuestros clientes, adaptándonos 
+                                                a sus necesidades y manteniéndonos a la vanguardia del sector.
+                                            </p>
+                                            <p>
+                                                Hoy contamos con un amplio catálogo de herramientas, materiales 
+                                                de construcción y artículos de ferretería de las mejores marcas 
+                                                del mercado.
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="bg-light p-5 text-center rounded">
+                                                <i class="fa fa-image fa-5x text-muted"></i>
+                                                <p class="text-muted mt-3">[Imagen de la tienda]</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Valores -->
+                            <section class="pt-5 pb-5 bg-light">
+                                <div class="container">
+                                    <div class="row text-center mb-4">
+                                        <div class="col-12">
+                                            <h2>Nuestros Valores</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body text-center">
+                                                    <i class="fa fa-star fa-3x text-warning mb-3"></i>
+                                                    <h4>Calidad</h4>
+                                                    <p class="text-muted">
+                                                        Solo trabajamos con las mejores marcas para 
+                                                        garantizar la satisfacción de nuestros clientes.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body text-center">
+                                                    <i class="fa fa-handshake-o fa-3x text-primary mb-3"></i>
+                                                    <h4>Confianza</h4>
+                                                    <p class="text-muted">
+                                                        Construimos relaciones duraderas basadas en 
+                                                        la honestidad y el servicio excepcional.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body text-center">
+                                                    <i class="fa fa-users fa-3x text-success mb-3"></i>
+                                                    <h4>Servicio</h4>
+                                                    <p class="text-muted">
+                                                        Nuestro equipo está capacitado para asesorarte 
+                                                        y encontrar la mejor solución para tu proyecto.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </t>
+                </t>
+            </field>
+        </record>
+
+        <!-- Página: Contacto -->
+        <record id="page_contacto" model="website.page">
+            <field name="name">Contacto</field>
+            <field name="url">/contacto</field>
+            <field name="website_indexed">True</field>
+            <field name="website_published">True</field>
+            <field name="view_id" ref="view_contacto"/>
+        </record>
+
+        <record id="view_contacto" model="ir.ui.view">
+            <field name="name">Contacto</field>
+            <field name="type">qweb</field>
+            <field name="key">ferreteria_website.contacto</field>
+            <field name="arch" type="xml">
+                <t t-name="ferreteria_website.contacto">
+                    <t t-call="website.layout">
+                        <div id="wrap" class="oe_structure">
+                            <section class="pt-5 pb-5">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12 text-center mb-5">
+                                            <h1>Contáctanos</h1>
+                                            <p class="lead text-muted">Estamos aquí para ayudarte</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- Información de contacto -->
+                                        <div class="col-lg-4 mb-4">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h4 class="card-title mb-4">Información de Contacto</h4>
+                                                    
+                                                    <div class="mb-3">
+                                                        <h6><i class="fa fa-map-marker text-primary mr-2"></i> Dirección</h6>
+                                                        <p class="text-muted" t-if="website.store_address" t-esc="website.store_address"/>
+                                                        <p class="text-muted" t-else="">[Dirección de la tienda]</p>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <h6><i class="fa fa-phone text-primary mr-2"></i> Teléfono</h6>
+                                                        <p class="text-muted" t-if="website.store_phone" t-esc="website.store_phone"/>
+                                                        <p class="text-muted" t-else="">[Teléfono]</p>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <h6><i class="fa fa-envelope text-primary mr-2"></i> Email</h6>
+                                                        <p class="text-muted">
+                                                            <a t-if="website.store_email" t-attf-href="mailto:{{website.store_email}}" t-esc="website.store_email"/>
+                                                            <span t-else="">[Email]</span>
+                                                        </p>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <h6><i class="fa fa-whatsapp text-success mr-2"></i> WhatsApp</h6>
+                                                        <t t-if="website.whatsapp_number">
+                                                            <a t-att-href="website.get_whatsapp_url()" target="_blank" class="btn btn-success btn-block">
+                                                                <i class="fa fa-whatsapp mr-1"></i> Enviar mensaje
+                                                            </a>
+                                                        </t>
+                                                    </div>
+                                                    
+                                                    <div>
+                                                        <h6><i class="fa fa-clock-o text-primary mr-2"></i> Horario</h6>
+                                                        <p class="text-muted" t-if="website.store_hours" t-esc="website.store_hours"/>
+                                                        <p class="text-muted" t-else="">Lunes a Viernes: 9:00 - 18:00<br/>Sábados: 9:00 - 14:00</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Formulario de contacto -->
+                                        <div class="col-lg-8">
+                                            <div class="card border-0 shadow-sm">
+                                                <div class="card-body p-4">
+                                                    <h4 class="card-title mb-4">Envíanos un mensaje</h4>
+                                                    <t t-call="website.contactus_form"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </t>
+                </t>
+            </field>
+        </record>
+
+        <!-- Página: FAQ -->
+        <record id="page_faq" model="website.page">
+            <field name="name">Preguntas Frecuentes</field>
+            <field name="url">/faq</field>
+            <field name="website_indexed">True</field>
+            <field name="website_published">True</field>
+            <field name="view_id" ref="view_faq"/>
+        </record>
+
+        <record id="view_faq" model="ir.ui.view">
+            <field name="name">FAQ</field>
+            <field name="type">qweb</field>
+            <field name="key">ferreteria_website.faq</field>
+            <field name="arch" type="xml">
+                <t t-name="ferreteria_website.faq">
+                    <t t-call="website.layout">
+                        <div id="wrap" class="oe_structure">
+                            <section class="pt-5 pb-5">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12 text-center mb-5">
+                                            <h1>Preguntas Frecuentes</h1>
+                                            <p class="lead text-muted">Encuentra respuestas a las consultas más comunes</p>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-8">
+                                            <div class="accordion" id="faqAccordion">
+                                                <!-- Pregunta 1 -->
+                                                <div class="card mb-2">
+                                                    <div class="card-header" id="faq1">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse1">
+                                                                ¿Cuáles son los métodos de pago disponibles?
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse1" class="collapse show" data-parent="#faqAccordion">
+                                                        <div class="card-body">
+                                                            Aceptamos tarjetas de crédito y débito, transferencias bancarias, 
+                                                            y pago en efectivo al momento de la entrega o retiro en tienda.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Pregunta 2 -->
+                                                <div class="card mb-2">
+                                                    <div class="card-header" id="faq2">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse2">
+                                                                ¿Cuánto tiempo tarda la entrega?
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse2" class="collapse" data-parent="#faqAccordion">
+                                                        <div class="card-body">
+                                                            Los tiempos de entrega varían según tu ubicación. Generalmente, 
+                                                            las entregas en la zona metropolitana se realizan en 24-48 horas. 
+                                                            Para envíos a otras ciudades, el tiempo estimado es de 3-5 días hábiles.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Pregunta 3 -->
+                                                <div class="card mb-2">
+                                                    <div class="card-header" id="faq3">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse3">
+                                                                ¿Puedo retirar mi pedido en tienda?
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse3" class="collapse" data-parent="#faqAccordion">
+                                                        <div class="card-body">
+                                                            Sí, ofrecemos la opción de retiro en tienda sin costo adicional. 
+                                                            Una vez que tu pedido esté listo, te notificaremos por correo 
+                                                            electrónico para que pases a recogerlo.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Pregunta 4 -->
+                                                <div class="card mb-2">
+                                                    <div class="card-header" id="faq4">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4">
+                                                                ¿Qué garantía tienen los productos?
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse4" class="collapse" data-parent="#faqAccordion">
+                                                        <div class="card-body">
+                                                            Todos nuestros productos cuentan con la garantía del fabricante. 
+                                                            La duración varía según el producto y la marca. Consulta la ficha 
+                                                            de cada producto para conocer los detalles específicos de garantía.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Pregunta 5 -->
+                                                <div class="card mb-2">
+                                                    <div class="card-header" id="faq5">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse5">
+                                                                ¿Cómo puedo hacer una devolución?
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse5" class="collapse" data-parent="#faqAccordion">
+                                                        <div class="card-body">
+                                                            Tienes 30 días para devolver productos sin uso y en su empaque original. 
+                                                            Contáctanos por WhatsApp o correo para iniciar el proceso de devolución. 
+                                                            Consulta nuestra <a href="/politica-devoluciones">política de devoluciones</a> 
+                                                            para más detalles.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="text-center mt-5">
+                                                <p>¿No encontraste lo que buscabas?</p>
+                                                <a href="/contacto" class="btn btn-primary">Contáctanos</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </t>
+                </t>
+            </field>
+        </record>
+    </data>
+</odoo>

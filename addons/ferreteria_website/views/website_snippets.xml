@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Snippets personalizados para el Website Builder -->
+        
+        <!-- Snippet: Categorías Destacadas -->
+        <template id="s_ferreteria_categories" name="Categorías Destacadas">
+            <section class="s_ferreteria_categories pt48 pb48">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center mb-4">
+                            <h2 class="h1-fs">Explora Nuestras Categorías</h2>
+                            <p class="lead text-muted">Encuentra todo lo que necesitas para tus proyectos</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <t t-foreach="website.get_featured_categories(8)" t-as="category">
+                            <div class="col-6 col-md-3 mb-4">
+                                <a t-attf-href="/shop/category/#{category.id}" class="text-decoration-none">
+                                    <div class="card h-100 border-0 shadow-sm text-center p-3">
+                                        <div class="card-body">
+                                            <i t-attf-class="fa #{category.category_icon or 'fa-folder'} fa-3x text-primary mb-3"></i>
+                                            <h5 class="card-title" t-esc="category.name"/>
+                                            <small class="text-muted">
+                                                <t t-esc="category.product_count_website"/> productos
+                                            </small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Snippet: Marcas Destacadas -->
+        <template id="s_ferreteria_brands" name="Marcas Destacadas">
+            <section class="s_ferreteria_brands pt32 pb32 bg-light">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center mb-4">
+                            <h2>Marcas que Confían en Nosotros</h2>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <t t-foreach="website.get_featured_brands(6)" t-as="brand">
+                            <div class="col-4 col-md-2 text-center mb-3">
+                                <t t-if="brand.logo">
+                                    <img t-att-src="image_data_uri(brand.logo)" 
+                                         t-att-alt="brand.name"
+                                         class="img-fluid" 
+                                         style="max-height: 60px; opacity: 0.8;"/>
+                                </t>
+                                <t t-else="">
+                                    <span class="h5 text-muted" t-esc="brand.name"/>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Snippet: Banner de Promoción -->
+        <template id="s_ferreteria_promo_banner" name="Banner de Promoción">
+            <section class="s_ferreteria_promo_banner pt64 pb64 bg-primary text-white">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h2 class="display-4 mb-3">¡Ofertas Especiales!</h2>
+                            <p class="lead mb-4">Descubre nuestras promociones en herramientas eléctricas y manuales.</p>
+                            <a href="/shop?filter_by_offers=1" class="btn btn-light btn-lg">
+                                Ver Ofertas <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 text-center d-none d-lg-block">
+                            <i class="fa fa-tags fa-5x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Snippet: WhatsApp Flotante -->
+        <template id="s_ferreteria_whatsapp" name="Botón WhatsApp">
+            <t t-if="website.show_whatsapp_button and website.whatsapp_number">
+                <a t-att-href="website.get_whatsapp_url()"
+                   target="_blank"
+                   class="ferreteria-whatsapp-btn"
+                   title="Contáctanos por WhatsApp">
+                    <i class="fa fa-whatsapp"></i>
+                </a>
+            </t>
+        </template>
+
+        <!-- Snippet: Beneficios/USPs -->
+        <template id="s_ferreteria_benefits" name="Beneficios">
+            <section class="s_ferreteria_benefits pt48 pb48 border-top border-bottom">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-6 col-md-3 mb-3 mb-md-0">
+                            <i class="fa fa-truck fa-2x text-primary mb-2"></i>
+                            <h6>Envío Rápido</h6>
+                            <small class="text-muted">A todo el país</small>
+                        </div>
+                        <div class="col-6 col-md-3 mb-3 mb-md-0">
+                            <i class="fa fa-shield fa-2x text-primary mb-2"></i>
+                            <h6>Garantía</h6>
+                            <small class="text-muted">En todos los productos</small>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <i class="fa fa-credit-card fa-2x text-primary mb-2"></i>
+                            <h6>Pago Seguro</h6>
+                            <small class="text-muted">Múltiples opciones</small>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <i class="fa fa-headphones fa-2x text-primary mb-2"></i>
+                            <h6>Soporte</h6>
+                            <small class="text-muted">Atención personalizada</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <!-- Registrar snippets en el Website Builder -->
+        <record id="s_ferreteria_categories_options" model="ir.ui.view">
+            <field name="name">Categorías Destacadas Options</field>
+            <field name="key">ferreteria_website.s_ferreteria_categories_options</field>
+            <field name="type">qweb</field>
+            <field name="arch" type="xml">
+                <data name="Categorías Destacadas" string="Ferretería">
+                    <t t-snippet="ferreteria_website.s_ferreteria_categories" t-thumbnail="/ferreteria_website/static/src/img/s_categories_thumb.png"/>
+                </data>
+            </field>
+        </record>
+
+        <record id="s_ferreteria_brands_options" model="ir.ui.view">
+            <field name="name">Marcas Destacadas Options</field>
+            <field name="key">ferreteria_website.s_ferreteria_brands_options</field>
+            <field name="type">qweb</field>
+            <field name="arch" type="xml">
+                <data name="Marcas Destacadas" string="Ferretería">
+                    <t t-snippet="ferreteria_website.s_ferreteria_brands" t-thumbnail="/ferreteria_website/static/src/img/s_brands_thumb.png"/>
+                </data>
+            </field>
+        </record>
+
+        <record id="s_ferreteria_benefits_options" model="ir.ui.view">
+            <field name="name">Beneficios Options</field>
+            <field name="key">ferreteria_website.s_ferreteria_benefits_options</field>
+            <field name="type">qweb</field>
+            <field name="arch" type="xml">
+                <data name="Beneficios" string="Ferretería">
+                    <t t-snippet="ferreteria_website.s_ferreteria_benefits" t-thumbnail="/ferreteria_website/static/src/img/s_benefits_thumb.png"/>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

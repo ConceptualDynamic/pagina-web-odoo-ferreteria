@@ -1,0 +1,478 @@
+/**
+ * Ferretería Website - Estilos principales
+ * =========================================
+ * Estilos personalizados para el sitio web de ferretería.
+ */
+
+/* ==========================================================================
+   Variables CSS
+   ========================================================================== */
+
+:root {
+    --ferreteria-primary: #FF6B00;
+    --ferreteria-secondary: #1E3A5F;
+    --ferreteria-accent: #28A745;
+    --ferreteria-warning: #FFC107;
+    --ferreteria-danger: #DC3545;
+    --ferreteria-light: #F8F9FA;
+    --ferreteria-dark: #212529;
+    --ferreteria-gray: #6C757D;
+    --ferreteria-border-radius: 8px;
+    --ferreteria-transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   Estilos Globales
+   ========================================================================== */
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Botón primario personalizado */
+.btn-ferreteria-primary {
+    background-color: var(--ferreteria-primary);
+    border-color: var(--ferreteria-primary);
+    color: white;
+    border-radius: var(--ferreteria-border-radius);
+    transition: var(--ferreteria-transition);
+}
+
+.btn-ferreteria-primary:hover {
+    background-color: #E55A00;
+    border-color: #E55A00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+/* Botón secundario personalizado */
+.btn-ferreteria-secondary {
+    background-color: var(--ferreteria-secondary);
+    border-color: var(--ferreteria-secondary);
+    color: white;
+    border-radius: var(--ferreteria-border-radius);
+    transition: var(--ferreteria-transition);
+}
+
+.btn-ferreteria-secondary:hover {
+    background-color: #152d4a;
+    border-color: #152d4a;
+    color: white;
+}
+
+/* ==========================================================================
+   Navegación
+   ========================================================================== */
+
+.ferreteria-nav {
+    transition: var(--ferreteria-transition);
+}
+
+.ferreteria-nav .nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: var(--ferreteria-transition);
+}
+
+.ferreteria-nav .nav-link:hover {
+    color: var(--ferreteria-primary) !important;
+}
+
+/* Mega menú */
+.ferreteria-mega-menu {
+    width: 100%;
+    padding: 1.5rem;
+    background: white;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 var(--ferreteria-border-radius) var(--ferreteria-border-radius);
+}
+
+/* ==========================================================================
+   Tarjetas de Producto
+   ========================================================================== */
+
+.oe_product_cart {
+    transition: var(--ferreteria-transition);
+    border-radius: var(--ferreteria-border-radius);
+    overflow: hidden;
+}
+
+.oe_product_cart:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.oe_product_cart .oe_product_image {
+    overflow: hidden;
+}
+
+.oe_product_cart .oe_product_image img {
+    transition: var(--ferreteria-transition);
+}
+
+.oe_product_cart:hover .oe_product_image img {
+    transform: scale(1.05);
+}
+
+/* Badge de marca */
+.product-brand-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--ferreteria-secondary);
+    color: white;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+/* Badge de oferta */
+.product-sale-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--ferreteria-danger);
+    color: white;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   Página de Producto (PDP)
+   ========================================================================== */
+
+#product_detail {
+    padding-top: 2rem;
+}
+
+#product_detail h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--ferreteria-dark);
+}
+
+/* Precio */
+.product_price .oe_price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ferreteria-primary);
+}
+
+.product_price .oe_price del {
+    color: var(--ferreteria-gray);
+    font-size: 1.25rem;
+}
+
+/* Especificaciones técnicas */
+#product_technical_specs {
+    background: var(--ferreteria-light);
+    padding: 1.5rem;
+    border-radius: var(--ferreteria-border-radius);
+}
+
+#product_technical_specs table {
+    width: 100%;
+}
+
+#product_technical_specs table tr:nth-child(even) {
+    background: white;
+}
+
+#product_technical_specs table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* ==========================================================================
+   Filtros de Productos (PLP)
+   ========================================================================== */
+
+.o_wsale_products_page #products_grid_before {
+    background: white;
+    padding: 1rem;
+    border-radius: var(--ferreteria-border-radius);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.o_wsale_products_page .nav-pills .nav-link {
+    border-radius: var(--ferreteria-border-radius);
+    margin-bottom: 0.25rem;
+}
+
+.o_wsale_products_page .nav-pills .nav-link.active,
+.o_wsale_products_page .nav-pills .nav-link:hover {
+    background-color: var(--ferreteria-primary);
+    color: white;
+}
+
+/* ==========================================================================
+   Carrito y Checkout
+   ========================================================================== */
+
+#wrap .oe_cart {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--ferreteria-border-radius);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.oe_cart .td-product_name a {
+    color: var(--ferreteria-dark);
+    font-weight: 600;
+}
+
+.oe_cart .td-product_name a:hover {
+    color: var(--ferreteria-primary);
+}
+
+/* Totales del carrito */
+#cart_total {
+    background: var(--ferreteria-light);
+    padding: 1.5rem;
+    border-radius: var(--ferreteria-border-radius);
+}
+
+/* Botón de checkout */
+.oe_cart a[href="/shop/checkout"] {
+    background: var(--ferreteria-accent);
+    border-color: var(--ferreteria-accent);
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--ferreteria-border-radius);
+}
+
+.oe_cart a[href="/shop/checkout"]:hover {
+    background: #218838;
+    border-color: #218838;
+}
+
+/* ==========================================================================
+   Botón flotante de WhatsApp
+   ========================================================================== */
+
+.ferreteria-whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    transition: var(--ferreteria-transition);
+    z-index: 9999;
+    text-decoration: none;
+}
+
+.ferreteria-whatsapp-btn:hover {
+    background: #128C7E;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+}
+
+.ferreteria-whatsapp-btn i {
+    margin: 0;
+}
+
+/* Animación de pulso */
+@keyframes whatsapp-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+.ferreteria-whatsapp-btn {
+    animation: whatsapp-pulse 2s infinite;
+}
+
+/* ==========================================================================
+   Snippets personalizados
+   ========================================================================== */
+
+/* Categorías destacadas */
+.s_ferreteria_categories .card {
+    transition: var(--ferreteria-transition);
+}
+
+.s_ferreteria_categories .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.s_ferreteria_categories .card:hover i {
+    color: var(--ferreteria-primary) !important;
+    transform: scale(1.1);
+}
+
+.s_ferreteria_categories i {
+    transition: var(--ferreteria-transition);
+}
+
+/* Marcas destacadas */
+.s_ferreteria_brands img {
+    filter: grayscale(100%);
+    transition: var(--ferreteria-transition);
+}
+
+.s_ferreteria_brands img:hover {
+    filter: grayscale(0%);
+}
+
+/* Beneficios */
+.s_ferreteria_benefits i {
+    transition: var(--ferreteria-transition);
+}
+
+.s_ferreteria_benefits .col-6:hover i,
+.s_ferreteria_benefits .col-md-3:hover i {
+    transform: scale(1.2);
+    color: var(--ferreteria-primary) !important;
+}
+
+/* ==========================================================================
+   Páginas institucionales
+   ========================================================================== */
+
+/* FAQ */
+#faqAccordion .card {
+    border: none;
+    border-radius: var(--ferreteria-border-radius);
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+#faqAccordion .card-header {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: var(--ferreteria-border-radius);
+}
+
+#faqAccordion .btn-link {
+    color: var(--ferreteria-dark);
+    font-weight: 600;
+    text-decoration: none;
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+}
+
+#faqAccordion .btn-link:hover {
+    color: var(--ferreteria-primary);
+}
+
+#faqAccordion .btn-link:not(.collapsed)::after {
+    content: '−';
+    float: right;
+    font-weight: bold;
+}
+
+#faqAccordion .btn-link.collapsed::after {
+    content: '+';
+    float: right;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/* Móvil */
+@media (max-width: 767.98px) {
+    /* WhatsApp más pequeño en móvil */
+    .ferreteria-whatsapp-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    /* Precio en PDP */
+    .product_price .oe_price {
+        font-size: 1.5rem;
+    }
+    
+    /* Tarjetas de producto */
+    .oe_product_cart {
+        margin-bottom: 1rem;
+    }
+    
+    /* Filtros en móvil */
+    .o_wsale_products_page #products_grid_before {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        border-radius: var(--ferreteria-border-radius) var(--ferreteria-border-radius) 0 0;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .s_ferreteria_categories .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+/* ==========================================================================
+   Utilidades
+   ========================================================================== */
+
+.text-ferreteria-primary {
+    color: var(--ferreteria-primary) !important;
+}
+
+.text-ferreteria-secondary {
+    color: var(--ferreteria-secondary) !important;
+}
+
+.bg-ferreteria-primary {
+    background-color: var(--ferreteria-primary) !important;
+}
+
+.bg-ferreteria-secondary {
+    background-color: var(--ferreteria-secondary) !important;
+}
+
+.bg-ferreteria-light {
+    background-color: var(--ferreteria-light) !important;
+}
+
+/* Sombras */
+.shadow-ferreteria {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-ferreteria-lg {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   Print
+   ========================================================================== */
+
+@media print {
+    .ferreteria-whatsapp-btn {
+        display: none !important;
+    }
+}

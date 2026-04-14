@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extensión del layout principal para incluir scripts de analytics -->
+        <template id="layout_ferreteria" inherit_id="website.layout" name="Ferretería Layout">
+            <!-- Google Analytics 4 -->
+            <xpath expr="//head" position="inside">
+                <t t-if="website.ga4_measurement_id">
+                    <script async="async" t-attf-src="https://www.googletagmanager.com/gtag/js?id={{website.ga4_measurement_id}}"></script>
+                    <script>
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', '<t t-esc="website.ga4_measurement_id"/>');
+                    </script>
+                </t>
+                <!-- Google Tag Manager -->
+                <t t-if="website.gtm_container_id">
+                    <script>
+                        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+                        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','<t t-esc="website.gtm_container_id"/>');
+                    </script>
+                </t>
+                <!-- CSS Variables personalizados -->
+                <style>
+                    :root {
+                        --ferreteria-primary: <t t-esc="website.primary_color or '#FF6B00'"/>;
+                        --ferreteria-secondary: <t t-esc="website.secondary_color or '#1E3A5F'"/>;
+                        --ferreteria-accent: <t t-esc="website.accent_color or '#28A745'"/>;
+                    }
+                </style>
+            </xpath>
+            
+            <!-- GTM noscript -->
+            <xpath expr="//body" position="inside">
+                <t t-if="website.gtm_container_id">
+                    <noscript>
+                        <iframe t-attf-src="https://www.googletagmanager.com/ns.html?id={{website.gtm_container_id}}"
+                                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                    </noscript>
+                </t>
+            </xpath>
+
+            <!-- WhatsApp Button -->
+            <xpath expr="//footer" position="after">
+                <t t-call="ferreteria_website.s_ferreteria_whatsapp"/>
+            </xpath>
+        </template>
+
+        <!-- Mejorar Header con mega menú -->
+        <template id="header_ferreteria" inherit_id="website.layout" name="Ferretería Header Enhancement">
+            <xpath expr="//header//nav" position="attributes">
+                <attribute name="class" add="ferreteria-nav" separator=" "/>
+            </xpath>
+        </template>
+
+        <!-- Footer personalizado con información de contacto -->
+        <template id="footer_ferreteria" inherit_id="website.footer_default" name="Ferretería Footer">
+            <xpath expr="//footer//div[hasclass('container')]" position="inside">
+                <div class="row mt-4 pt-4 border-top">
+                    <div class="col-lg-4 mb-3">
+                        <h5>Contacto</h5>
+                        <t t-if="website.store_phone">
+                            <p class="mb-1">
+                                <i class="fa fa-phone mr-2"></i>
+                                <t t-esc="website.store_phone"/>
+                            </p>
+                        </t>
+                        <t t-if="website.store_email">
+                            <p class="mb-1">
+                                <i class="fa fa-envelope mr-2"></i>
+                                <a t-attf-href="mailto:{{website.store_email}}" t-esc="website.store_email"/>
+                            </p>
+                        </t>
+                        <t t-if="website.whatsapp_number">
+                            <p class="mb-1">
+                                <i class="fa fa-whatsapp mr-2"></i>
+                                <a t-att-href="website.get_whatsapp_url()" target="_blank">
+                                    <t t-esc="website.whatsapp_number"/>
+                                </a>
+                            </p>
+                        </t>
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <h5>Horario de Atención</h5>
+                        <t t-if="website.store_hours">
+                            <p class="mb-0 text-muted" t-esc="website.store_hours"/>
+                        </t>
+                        <t t-else="">
+                            <p class="mb-0 text-muted">Lunes a Viernes: 9:00 - 18:00<br/>Sábados: 9:00 - 14:00</p>
+                        </t>
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <h5>Dirección</h5>
+                        <t t-if="website.store_address">
+                            <p class="mb-0 text-muted" t-esc="website.store_address"/>
+                        </t>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!-- Meta tags SEO mejorados -->
+        <template id="website_seo_tags" inherit_id="website.layout" name="Ferretería SEO Meta">
+            <xpath expr="//head/meta[@name='description']" position="after">
+                <meta name="robots" content="index, follow"/>
+                <meta property="og:type" content="website"/>
+                <meta property="og:locale" content="es_ES"/>
+                <link rel="canonical" t-att-href="request.httprequest.url"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

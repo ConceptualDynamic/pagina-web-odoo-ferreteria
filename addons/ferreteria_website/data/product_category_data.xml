@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Categoría Raíz: Ferretería -->
+        <record id="product_category_ferreteria_root" model="product.category">
+            <field name="name">Ferretería</field>
+            <field name="is_featured">True</field>
+            <field name="display_order">1</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="website_description"><![CDATA[
+                <p>Encuentra todo lo que necesitas para tus proyectos de construcción, 
+                reparación y mejoras del hogar. Productos de calidad profesional 
+                a los mejores precios.</p>
+            ]]></field>
+        </record>
+
+        <!-- Categoría: Herramientas Manuales -->
+        <record id="product_category_herramientas_manuales" model="product.category">
+            <field name="name">Herramientas Manuales</field>
+            <field name="parent_id" ref="product_category_ferreteria_root"/>
+            <field name="is_featured">True</field>
+            <field name="display_order">10</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="category_icon">fa-wrench</field>
+            <field name="website_description"><![CDATA[
+                <p>Herramientas manuales de calidad para trabajo profesional y doméstico. 
+                Martillos, destornilladores, llaves, alicates y más.</p>
+            ]]></field>
+            <field name="seo_title">Herramientas Manuales | Ferretería</field>
+            <field name="seo_description">Compra herramientas manuales de las mejores marcas. Martillos, destornilladores, llaves, alicates, cinceles y más. Envío a todo el país.</field>
+        </record>
+
+        <!-- Categoría: Herramientas Eléctricas -->
+        <record id="product_category_herramientas_electricas" model="product.category">
+            <field name="name">Herramientas Eléctricas</field>
+            <field name="parent_id" ref="product_category_ferreteria_root"/>
+            <field name="is_featured">True</field>
+            <field name="display_order">20</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="category_icon">fa-bolt</field>
+            <field name="website_description"><![CDATA[
+                <p>Herramientas eléctricas y a batería para máxima productividad. 
+                Taladros, amoladoras, sierras y rotomartillos de marcas líderes.</p>
+            ]]></field>
+            <field name="seo_title">Herramientas Eléctricas | Ferretería</field>
+            <field name="seo_description">Herramientas eléctricas profesionales. Taladros, amoladoras, sierras, rotomartillos y más. Las mejores marcas con garantía.</field>
+        </record>
+
+        <!-- Categoría: Tornillería y Fijaciones -->
+        <record id="product_category_tornilleria" model="product.category">
+            <field name="name">Tornillería y Fijaciones</field>
+            <field name="parent_id" ref="product_category_ferreteria_root"/>
+            <field name="is_featured">True</field>
+            <field name="display_order">30</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="category_icon">fa-cog</field>
+            <field name="website_description"><![CDATA[
+                <p>Todo en tornillos, tuercas, clavos, anclas y sistemas de fijación. 
+                Productos para madera, concreto, metal y drywall.</p>
+            ]]></field>
+            <field name="seo_title">Tornillería y Fijaciones | Ferretería</field>
+            <field name="seo_description">Tornillos, tuercas, clavos, anclas y fijaciones. Para madera, concreto, metal y drywall. Compra por unidad o caja.</field>
+        </record>
+
+        <!-- Categoría: Pintura y Accesorios -->
+        <record id="product_category_pintura" model="product.category">
+            <field name="name">Pintura y Accesorios</field>
+            <field name="parent_id" ref="product_category_ferreteria_root"/>
+            <field name="is_featured">True</field>
+            <field name="display_order">40</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="category_icon">fa-paint-brush</field>
+            <field name="website_description"><![CDATA[
+                <p>Pinturas, esmaltes, barnices y todos los accesorios para pintar. 
+                Brochas, rodillos, cintas y equipos de aplicación.</p>
+            ]]></field>
+            <field name="seo_title">Pintura y Accesorios | Ferretería</field>
+            <field name="seo_description">Pinturas, esmaltes, barnices y accesorios para pintar. Brochas, rodillos, cintas de pintor y más. Colores disponibles.</field>
+        </record>
+
+        <!-- Categoría: Plomería -->
+        <record id="product_category_plomeria" model="product.category">
+            <field name="name">Plomería</field>
+            <field name="parent_id" ref="product_category_ferreteria_root"/>
+            <field name="is_featured">True</field>
+            <field name="display_order">50</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="category_icon">fa-tint</field>
+            <field name="website_description"><![CDATA[
+                <p>Materiales y herramientas de plomería. Tuberías, conexiones, 
+                válvulas, grifería y accesorios para instalaciones hidráulicas.</p>
+            ]]></field>
+            <field name="seo_title">Plomería | Ferretería</field>
+            <field name="seo_description">Materiales de plomería: tuberías, conexiones, válvulas, grifería y accesorios. Todo para instalaciones hidráulicas.</field>
+        </record>
+
+        <!-- Categoría: Electricidad -->
+        <record id="product_category_electricidad" model="product.category">
+            <field name="name">Electricidad</field>
+            <field name="parent_id" ref="product_category_ferreteria_root"/>
+            <field name="is_featured">True</field>
+            <field name="display_order">60</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="category_icon">fa-plug</field>
+            <field name="website_description"><![CDATA[
+                <p>Material eléctrico para instalaciones residenciales e industriales. 
+                Cables, interruptores, contactos, lámparas y tableros.</p>
+            ]]></field>
+            <field name="seo_title">Material Eléctrico | Ferretería</field>
+            <field name="seo_description">Material eléctrico: cables, interruptores, contactos, lámparas, tableros y accesorios. Instalaciones residenciales e industriales.</field>
+        </record>
+
+        <!-- Categoría: Seguridad Industrial -->
+        <record id="product_category_seguridad" model="product.category">
+            <field name="name">Seguridad Industrial</field>
+            <field name="parent_id" ref="product_category_ferreteria_root"/>
+            <field name="is_featured">True</field>
+            <field name="display_order">70</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="category_icon">fa-hard-hat</field>
+            <field name="website_description"><![CDATA[
+                <p>Equipo de protección personal y seguridad industrial. 
+                Cascos, guantes, gafas, arneses y señalización.</p>
+            ]]></field>
+            <field name="seo_title">Seguridad Industrial | Ferretería</field>
+            <field name="seo_description">Equipo de protección personal: cascos, guantes, gafas, arneses, botas de seguridad y señalización. Protege a tu equipo.</field>
+        </record>
+
+        <!-- Categoría: Jardinería -->
+        <record id="product_category_jardineria" model="product.category">
+            <field name="name">Jardinería</field>
+            <field name="parent_id" ref="product_category_ferreteria_root"/>
+            <field name="is_featured">True</field>
+            <field name="display_order">80</field>
+            <field name="show_in_mega_menu">True</field>
+            <field name="category_icon">fa-leaf</field>
+            <field name="website_description"><![CDATA[
+                <p>Herramientas y accesorios para jardinería. Podadoras, 
+                cortadoras de césped, mangueras, aspersores y macetas.</p>
+            ]]></field>
+            <field name="seo_title">Jardinería | Ferretería</field>
+            <field name="seo_description">Herramientas de jardinería: podadoras, cortadoras de césped, mangueras, aspersores, palas y rastrillos. Todo para tu jardín.</field>
+        </record>
+
+        <!-- ===== SUBCATEGORÍAS ===== -->
+        
+        <!-- Subcategorías: Herramientas Manuales -->
+        <record id="product_category_martillos" model="product.category">
+            <field name="name">Martillos y Mazos</field>
+            <field name="parent_id" ref="product_category_herramientas_manuales"/>
+            <field name="display_order">1</field>
+            <field name="show_in_mega_menu">True</field>
+        </record>
+
+        <record id="product_category_destornilladores" model="product.category">
+            <field name="name">Destornilladores</field>
+            <field name="parent_id" ref="product_category_herramientas_manuales"/>
+            <field name="display_order">2</field>
+            <field name="show_in_mega_menu">True</field>
+        </record>
+
+        <record id="product_category_llaves" model="product.category">
+            <field name="name">Llaves y Dados</field>
+            <field name="parent_id" ref="product_category_herramientas_manuales"/>
+            <field name="display_order">3</field>
+            <field name="show_in_mega_menu">True</field>
+        </record>
+
+        <record id="product_category_alicates" model="product.category">
+            <field name="name">Alicates y Pinzas</field>
+            <field name="parent_id" ref="product_category_herramientas_manuales"/>
+            <field name="display_order">4</field>
+            <field name="show_in_mega_menu">True</field>
+        </record>
+
+        <!-- Subcategorías: Herramientas Eléctricas -->
+        <record id="product_category_taladros" model="product.category">
+            <field name="name">Taladros y Rotomartillos</field>
+            <field name="parent_id" ref="product_category_herramientas_electricas"/>
+            <field name="display_order">1</field>
+            <field name="show_in_mega_menu">True</field>
+        </record>
+
+        <record id="product_category_amoladoras" model="product.category">
+            <field name="name">Amoladoras</field>
+            <field name="parent_id" ref="product_category_herramientas_electricas"/>
+            <field name="display_order">2</field>
+            <field name="show_in_mega_menu">True</field>
+        </record>
+
+        <record id="product_category_sierras" model="product.category">
+            <field name="name">Sierras</field>
+            <field name="parent_id" ref="product_category_herramientas_electricas"/>
+            <field name="display_order">3</field>
+            <field name="show_in_mega_menu">True</field>
+        </record>
+
+        <record id="product_category_lijadoras" model="product.category">
+            <field name="name">Lijadoras</field>
+            <field name="parent_id" ref="product_category_herramientas_electricas"/>
+            <field name="display_order">4</field>
+            <field name="show_in_mega_menu">True</field>
+        </record>
+    </data>
+</odoo>
