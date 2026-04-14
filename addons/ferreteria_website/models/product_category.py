@@ -86,7 +86,6 @@ class ProductCategory(models.Model):
         for category in self:
             category.product_count_website = self.env['product.template'].search_count([
                 ('categ_id', 'child_of', category.id),
-                ('is_published', '=', True),
                 ('website_published', '=', True),
             ])
     

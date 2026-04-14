@@ -55,9 +55,14 @@ odoo.define('ferreteria_website.main', function (require) {
                     item_category: productDetail.dataset.productCategory || '',
                     item_brand: productDetail.dataset.productBrand || ''
                 };
+                
+                // Get currency from page or default to website currency
+                const currency = productDetail.dataset.productCurrency || 
+                                 document.querySelector('[data-website-currency]')?.dataset.websiteCurrency || 
+                                 'USD';
 
                 gtag('event', 'view_item', {
-                    currency: 'MXN', // Ajustar según moneda
+                    currency: currency,
                     value: productData.price,
                     items: [productData]
                 });
@@ -74,8 +79,13 @@ odoo.define('ferreteria_website.main', function (require) {
             if ($productCard.length && typeof gtag !== 'undefined') {
                 const productData = this._getProductData($productCard);
                 
+                // Get currency from page or default to website currency
+                const currency = $productCard.data('product-currency') || 
+                                 $('[data-website-currency]').data('websiteCurrency') || 
+                                 'USD';
+                
                 gtag('event', 'add_to_cart', {
-                    currency: 'MXN',
+                    currency: currency,
                     value: productData.price,
                     items: [productData]
                 });
@@ -301,11 +311,17 @@ odoo.define('ferreteria_website.main', function (require) {
 
     /**
      * Utility: Format currency
+     * Uses browser locale detection for proper formatting
      */
-    function formatCurrency(amount, currency) {
-        return new Intl.NumberFormat('es-MX', {
+    function formatCurrency(amount, currency, locale) {
+        // Try to detect locale from document or use browser default
+        const detectedLocale = locale || 
+                               document.documentElement.lang || 
+                               navigator.language || 
+                               'en-US';
+        return new Intl.NumberFormat(detectedLocale, {
             style: 'currency',
-            currency: currency || 'MXN'
+            currency: currency || 'USD'
         }).format(amount);
     }
 

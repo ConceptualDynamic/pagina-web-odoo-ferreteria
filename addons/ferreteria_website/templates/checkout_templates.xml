@@ -144,7 +144,7 @@
                             value: <t t-esc="order.amount_total"/>,
                             currency: '<t t-esc="order.currency_id.name"/>',
                             tax: <t t-esc="order.amount_tax"/>,
-                            shipping: <t t-esc="order.delivery_price if hasattr(order, 'delivery_price') else 0"/>,
+                            shipping: <t t-esc="order.delivery_price or 0"/>,
                             items: [
                                 <t t-foreach="order.order_line" t-as="line">
                                 {

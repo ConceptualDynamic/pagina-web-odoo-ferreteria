@@ -144,7 +144,7 @@
                         "url": "<t t-esc="request.httprequest.url"/>",
                         "priceCurrency": "<t t-esc="product.currency_id.name"/>",
                         "price": "<t t-esc="product.list_price"/>",
-                        "availability": "<t t-esc="'https://schema.org/InStock' if product.is_published else 'https://schema.org/OutOfStock'/>"
+                        "availability": "<t t-esc="'https://schema.org/InStock' if (product.website_published and product.is_storable and product.qty_available > 0) or (product.website_published and not product.is_storable) else 'https://schema.org/OutOfStock'/>"
                     }
                 }
                 </script>
@@ -159,6 +159,7 @@
                 <attribute name="t-att-data-product-price" add="product.list_price" separator=" "/>
                 <attribute name="t-att-data-product-category" add="product.categ_id.name" separator=" "/>
                 <attribute name="t-att-data-product-brand" add="product.brand_id.name if product.brand_id else ''" separator=" "/>
+                <attribute name="t-att-data-product-currency" add="product.currency_id.name" separator=" "/>
             </xpath>
         </template>
     </data>
