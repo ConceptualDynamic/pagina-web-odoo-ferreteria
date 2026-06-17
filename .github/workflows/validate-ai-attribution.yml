@@ -1,0 +1,77 @@
+name: Validate AI Attribution
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate-ai-attribution:
+    name: validate-ai-attribution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate required attribution fields
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, "utf8"));
+          const body = event.pull_request?.body || "";
+
+          function field(names) {
+            for (const line of body.split(/\r?\n/)) {
+              const match = line.match(/^\s*(?:[-*]\s*)?([^:]+):\s*(.*?)\s*$/);
+              if (!match) continue;
+              const key = match[1].trim().toLowerCase().replace(/[\s_-]+/g, " ");
+              if (names.includes(key)) return match[2].trim();
+            }
+            return "";
+          }
+
+          const values = {
+            "Human owner": field(["human owner", "owner humano", "responsable humano"]),
+            "AI used": field(["ai used", "ia usada", "ai", "ia"]),
+            "Agent": field(["agent", "agente", "ai agent", "ia agent"]),
+            "Subagents": field(["subagents", "subagentes", "subagent", "subagente"]),
+            "Task source": field(["task source", "fuente tarea", "origen tarea"]),
+            "Tests run": field(["tests run", "pruebas ejecutadas", "tests"])
+          };
+
+          const empty = new Set(["", "todo", "tbd", "pending", "pendiente", "-", "_"]);
+          const none = new Set(["none", "ninguno", "n/a", "na", "no aplica", "not applicable"]);
+          const yes = new Set(["yes", "true", "si", "sí", "y", "ai", "ia"]);
+          const no = new Set(["no", "false", "manual", "human", "humano"]);
+          const norm = (value) => String(value || "").trim().toLowerCase();
+          const failures = [];
+
+          for (const [name, value] of Object.entries(values)) {
+            if (empty.has(norm(value))) failures.push(`${name} is required`);
+          }
+
+          const ai = norm(values["AI used"]);
+          if (!yes.has(ai) && !no.has(ai)) failures.push("AI used must be yes or no");
+
+          if (yes.has(ai)) {
+            if (none.has(norm(values.Agent))) failures.push("Agent must name the AI tool when AI used is yes");
+            if (none.has(norm(values.Subagents))) failures.push("Subagents must name the roles used when AI used is yes");
+          }
+
+          if (failures.length) {
+            console.error("AI attribution validation failed:");
+            for (const item of failures) console.error(`- ${item}`);
+            console.error("\nRequired PR body section:\n");
+            console.error("## Attribution");
+            console.error("Human owner:");
+            console.error("AI used: yes/no");
+            console.error("Agent:");
+            console.error("Subagents:");
+            console.error("Task source:");
+            console.error("Tests run:");
+            process.exit(1);
+          }
+
+          console.log("AI attribution validation passed.");
+          NODE
