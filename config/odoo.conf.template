@@ -1,0 +1,182 @@
+[options]
+# ========================================
+# Configuración Odoo - Ferretería Web
+# ========================================
+# Este es un template de configuración para la instancia de Odoo
+# Copiar como odoo.conf y ajustar los valores según el entorno
+
+# ========================================
+# SEGURIDAD
+# ========================================
+# Contraseña maestra para gestionar bases de datos
+# ¡IMPORTANTE! Cambiar en producción
+admin_passwd = CHANGE_ME_STRONG_PASSWORD
+
+# ========================================
+# BASE DE DATOS
+# ========================================
+db_host = localhost
+db_port = 5432
+db_user = odoo
+db_password = CHANGE_ME_DB_PASSWORD
+# Nombre de la base de datos (dejar False para multi-db)
+db_name = ferreteria_db
+# Filtro de bases de datos disponibles (regex)
+# dbfilter = ^ferreteria_db$
+
+# ========================================
+# DIRECTORIOS
+# ========================================
+# Ruta a los módulos adicionales (separados por coma)
+addons_path = /usr/lib/python3/dist-packages/odoo/addons,/opt/odoo/custom-addons
+
+# Directorio de datos (filestore, sesiones)
+data_dir = /var/lib/odoo
+
+# ========================================
+# SERVIDOR HTTP
+# ========================================
+# Puerto HTTP
+http_port = 8069
+# Interfaz de red (0.0.0.0 para todas, 127.0.0.1 solo local)
+http_interface = 0.0.0.0
+# Puerto XML-RPC (legacy)
+xmlrpc_port = 8069
+
+# ========================================
+# PROXY Y SSL
+# ========================================
+# Usar cuando hay proxy reverso (Nginx, Apache)
+proxy_mode = False
+# Habilitar X-Forwarded-* headers
+# proxy_mode = True
+
+# ========================================
+# WORKERS (PRODUCCIÓN)
+# ========================================
+# Número de workers (0 = modo threading, >0 = multiprocessing)
+# Fórmula recomendada: (CPU * 2) + 1
+workers = 4
+
+# Workers para tareas cron
+max_cron_threads = 2
+
+# ========================================
+# LÍMITES DE RECURSOS
+# ========================================
+# Límite de tiempo CPU por request (segundos)
+limit_time_cpu = 600
+
+# Límite de tiempo real por request (segundos)
+limit_time_real = 1200
+
+# Límite de tiempo para requests cron (segundos)
+limit_time_real_cron = 3600
+
+# Límite de memoria soft (bytes) - warning
+limit_memory_soft = 2147483648
+
+# Límite de memoria hard (bytes) - kill worker
+limit_memory_hard = 2684354560
+
+# Límite de requests antes de reciclar worker
+limit_request = 8192
+
+# ========================================
+# LOGGING
+# ========================================
+# Archivo de log
+logfile = /var/log/odoo/odoo-server.log
+
+# Nivel de log: debug, debug_rpc, info, warn, error, critical
+log_level = info
+
+# Rotar logs
+logrotate = True
+
+# Handler de logs: :INFO, werkzeug:WARNING, etc
+# log_handler = :INFO
+
+# ========================================
+# EMAIL
+# ========================================
+# Servidor SMTP saliente
+# email_from = noreply@ferreteria.com
+# smtp_server = smtp.gmail.com
+# smtp_port = 587
+# smtp_ssl = False
+# smtp_user = your_email@gmail.com
+# smtp_password = your_email_password
+
+# ========================================
+# INTERNACIONALIZACIÓN
+# ========================================
+# Idiomas disponibles (códigos separados por coma)
+# load_language = es_MX,es_CO,en_US
+
+# ========================================
+# SESIONES
+# ========================================
+# Timeout de sesión (segundos)
+# session_timeout = 3600
+
+# ========================================
+# SEGURIDAD ADICIONAL
+# ========================================
+# Lista de IPs permitidas para acceder a /web/database
+# list_db = False
+
+# Deshabilitar gestión de BD desde web
+# list_db = False
+
+# ========================================
+# DESARROLLO (Solo para desarrollo)
+# ========================================
+# Auto-reload al detectar cambios en código
+# dev_mode = reload
+
+# Modo debug
+# log_level = debug
+
+# Sin paginación en listas
+# limit_memory_soft = 0
+# limit_memory_hard = 0
+
+# ========================================
+# PERFORMANCE
+# ========================================
+# Límite de registros por página (vistas)
+# limit_memory_hard = 2684354560
+
+# Cache de traducciones
+# translation_cache_size = 1000
+
+# ========================================
+# PERSONALIZACIÓN
+# ========================================
+# Server wide modules (sin-db)
+server_wide_modules = base,web
+
+# Formato de fecha
+# date_format = %Y-%m-%d
+
+# Formato de hora
+# time_format = %H:%M:%S
+
+# ========================================
+# NOTAS DE CONFIGURACIÓN
+# ========================================
+# Para entorno de desarrollo:
+# - workers = 0
+# - log_level = debug
+# - dev_mode = reload
+#
+# Para entorno de producción:
+# - workers = (CPU * 2) + 1
+# - log_level = info
+# - proxy_mode = True (si usa Nginx/Apache)
+# - list_db = False
+# - Configurar límites de recursos apropiados
+#
+# Documentación completa:
+# https://www.odoo.com/documentation/17.0/administration/install/deploy.html
